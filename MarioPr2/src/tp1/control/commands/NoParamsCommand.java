@@ -1,0 +1,20 @@
+package tp1.control.commands;
+
+public abstract class NoParamsCommand extends AbstractCommand {
+
+	public NoParamsCommand(String name, String shortcut, String details, String help) {
+		super(name, shortcut, details, help);
+	}
+
+	@Override
+	public Command parse(String[] commandWords) {
+		Command aux = null;
+		if(commandWords.length == 1 && new HelpCommand().matchCommandName(commandWords[0])) {
+			aux = new HelpCommand();
+		}
+		else if (commandWords.length == 1 && new ExitCommand().matchCommandName(commandWords[0])) {
+			aux = new ExitCommand();
+		}
+		return aux;
+	}
+}
