@@ -17,4 +17,9 @@ public abstract class MovingObject extends GameObject{
 	public boolean isSolid() {
 		return false;
 	}
+	
+	public void invertirDireccion() {
+		if(this.direccion == Action.LEFT) this.direccion = Action.RIGHT;
+		else if(this.direccion == Action.RIGHT) this.direccion = Action.LEFT;
+	}
 }

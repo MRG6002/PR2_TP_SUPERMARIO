@@ -1,12 +1,11 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Land extends GameObject{
-	public Land(Game game, Position pos) {
-		super(game, pos);
+	public Land(Position pos) {
+		super(null, pos);
 	}
 	
 	public boolean isSolid() {

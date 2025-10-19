@@ -8,12 +8,14 @@ public abstract class NoParamsCommand extends AbstractCommand {
 
 	@Override
 	public Command parse(String[] commandWords) {
-		Command aux = null;
-		if(commandWords.length == 1 && new HelpCommand().matchCommandName(commandWords[0])) {
-			aux = new HelpCommand();
-		}
-		else if (commandWords.length == 1 && new ExitCommand().matchCommandName(commandWords[0])) {
-			aux = new ExitCommand();
+		NoParamsCommand aux = null;
+		if(commandWords.length == 1) {
+			if(new HelpCommand().matchCommandName(commandWords[0])) {
+				aux = new HelpCommand();
+			}
+			else if (new ExitCommand().matchCommandName(commandWords[0])) {
+				aux = new ExitCommand();
+			}
 		}
 		return aux;
 	}

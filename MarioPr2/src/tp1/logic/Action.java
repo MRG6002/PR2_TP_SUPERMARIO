@@ -26,5 +26,4 @@ public enum Action {
 	public String toString() {
 		return new Position(this.getX(), this.getY()).toString();
 	}
-	
 }

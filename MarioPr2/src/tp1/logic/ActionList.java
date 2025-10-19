@@ -20,7 +20,8 @@ public class ActionList {
 		return this.actionList.size();
 	}
 	
-	public void restricciones() {
+	//este le vamos a quitar, no hace falta si lo miramos en controler
+	/*public void restricciones() {
 		int der = 0, izq = 0, arr = 0, aba = 0;
 		for(int i = 0; i < this.actionList.size(); i++) {
 			//contadores
@@ -36,13 +37,17 @@ public class ActionList {
 			else if((arr > 0 && action == Action.DOWN) || aba >= 5) this.actionList.set(i, null);
 		}
 		this.actionList.removeIf(action -> action == null);
-	}
+	}*/
 	
 	public int getX(int pos) {
 		return this.actionList.get(pos).getX();
 	}
 	public int getY(int pos) {
 		return this.actionList.get(pos).getY();
+	}
+
+	public Action get(int i) {
+		return this.actionList.get(i);
 	}
 }
 

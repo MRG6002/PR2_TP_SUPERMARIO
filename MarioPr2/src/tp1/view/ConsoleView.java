@@ -5,6 +5,7 @@ import static tp1.util.MyStringUtils.repeat;
 import java.util.Scanner;
 
 import tp1.logic.Game;
+import tp1.logic.GameStatus;
 import tp1.util.MyStringUtils;
 
 public class ConsoleView extends GameView {
@@ -28,12 +29,12 @@ public class ConsoleView extends GameView {
 	private static final String UPPER_ROW_BORDER = "┌" + ROW_BORDER + "┐" + NEW_LINE;
 	private static final String LOWER_ROW_BORDER = "└" + ROW_BORDER + "┘" + NEW_LINE;
 
-	private static final String TAB = MyStringUtils.repeat(SPACE, CELL_SIZE);
+	//private static final String TAB = MyStringUtils.repeat(SPACE, CELL_SIZE);
 
 
 	Scanner scanner;
 
-	public ConsoleView(Game game) {
+	public ConsoleView(GameStatus game) {
 		super(game);
 		scanner = new Scanner(System.in);
 	}

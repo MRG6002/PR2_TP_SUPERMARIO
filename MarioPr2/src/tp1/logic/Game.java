@@ -7,7 +7,7 @@ import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Mario;
 import tp1.logic.gameobjects.Goomba;
 
-public class Game {
+public class Game implements GameModel, GameStatus, GameWorld {
 
 	public static final int DIM_X = 30;
 	public static final int DIM_Y = 15;
@@ -15,13 +15,10 @@ public class Game {
 	private int puntos = 0;
 	private int numVidas = 3;
 	private int nLevel;
-	private Mario mario = new Mario(new Position(0, 1));
+	private Mario mario;
 	private boolean partidaGanada = false;
+	private boolean abandona = false;
 	private GameObjectContainer GameObjectContainer;
-	
-	public void pasarGameAMario(Game game) {
-		this.mario.recibeGame(game);
-	}
 	
 	private void initLevel0() {
 		//Lands
@@ -50,13 +47,11 @@ public class Game {
 		this.GameObjectContainer.add(new Land(new Position(6, 5)));
 		//this.GameObjectContainer.add(new Land(new Position(2, 11)));
 		//Mario y puerta
-		this.mario.resetMario(new Position(0, 12));
+		this.mario = new Mario(this, new Position(0, 12));
 		this.GameObjectContainer.add(this.mario);
 		this.GameObjectContainer.add(new ExitDoor(new Position(29, 12)));
 		//Goombas
-		this.GameObjectContainer.add(new Goomba(new Position(19, 0)));
-		//this.GameObjectContainer.add(new Goomba(new Position(19, 0)));
-		//this.GameObjectContainer.add(new Goomba(new Position(16, 13)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(19, 0)));
 	}
 	
 	private void initLevel1() {
@@ -86,17 +81,17 @@ public class Game {
 		this.GameObjectContainer.add(new Land(new Position(7, 9)));
 		this.GameObjectContainer.add(new Land(new Position(6, 5)));
 		//Mario y puerta
-		this.mario.resetMario(new Position(0, 12));
+		this.mario = new Mario(this, new Position(0, 12));
 		this.GameObjectContainer.add(this.mario);
 		this.GameObjectContainer.add(new ExitDoor(new Position(29, 12)));
 		//Goombas
-		this.GameObjectContainer.add(new Goomba(new Position(6, 12)));
-		this.GameObjectContainer.add(new Goomba(new Position(8, 12)));
-		this.GameObjectContainer.add(new Goomba(new Position(11, 12)));
-		this.GameObjectContainer.add(new Goomba(new Position(14, 12)));
-		this.GameObjectContainer.add(new Goomba(new Position(10, 10)));
-		this.GameObjectContainer.add(new Goomba(new Position(6, 4)));
-		this.GameObjectContainer.add(new Goomba(new Position(19, 0)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(6, 12)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(8, 12)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(11, 12)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(14, 12)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(10, 10)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(6, 4)));
+		this.GameObjectContainer.add(new Goomba(this, new Position(19, 0)));
 	}
 	
 	public Game(int nLevel) {
@@ -126,10 +121,7 @@ public class Game {
 	public void resetGame(int nLevel) {
 		this.tiempoRestante = 100;
 		this.GameObjectContainer = new GameObjectContainer();
-		if(nLevel == 0 || nLevel == 1) {
-			this.inicializarGameObjectContainer(nLevel);
-		}
-		else resetGame();
+		this.inicializarGameObjectContainer(nLevel);
 	}
 	
 	public void resetGame() { 
@@ -141,10 +133,6 @@ public class Game {
 	
 	public String positionToString(int col, int row) {
 		return GameObjectContainer.ContainerEnPos(new Position(col,row));
-	}
-
-	public boolean playerWins() {
-		return partidaGanada;
 	}
 
 	public int remainingTime() {
@@ -163,24 +151,30 @@ public class Game {
 	public String toString() {
 		return this.numVidas + "vidas " + this.puntos + "ptos " + this.tiempoRestante + "s";
 	}
+	
+	public boolean playerWins() {
+		return this.partidaGanada;
+	}
 
 	public boolean playerLoses() {
 		return this.numVidas == 0 || this.tiempoRestante == 0;
 	}
+	
+	public void abandona() {
+		this.abandona = true;
+	}
 
 	public boolean isFinished() {
-		return this.playerLoses() || this.playerWins();
+		return this.playerLoses() || this.playerWins() || this.abandona;
 	}
 	
 	public void update() {
-		this.tiempoRestante--;
+		this.restarTiempo();
 		this.GameObjectContainer.update();
-		if(this.numVidas == 0) this.mario = null;
-		
 	}
 	
-	public void doInteractionsFrom(Mario mario) {
-		this.GameObjectContainer.doInteractionsFrom(mario);
+	public boolean doInteractionsFrom(Mario mario) {
+		return this.GameObjectContainer.doInteractionsFrom(mario);
 	}
 	
 	public void addAction(Action action) {
@@ -205,15 +199,11 @@ public class Game {
 		if(this.tiempoRestante > 0) this.tiempoRestante--;
 		
 	}
+	
+	public boolean isSolid(Position pos) {
+		return this.GameObjectContainer.isSolid(pos);
+	}
 }
-
-
-
-
-
-
-
-
 
 
 /*package tp1.logic;
