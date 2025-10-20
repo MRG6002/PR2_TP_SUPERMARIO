@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Position;
@@ -16,6 +18,11 @@ public class Land extends GameObject{
 	
 	public String getIcon() {
 		return Messages.LAND;
+	}
+	
+	@Override
+	public String toString() {
+		return "Land" + super.toString();
 	}
 
 }

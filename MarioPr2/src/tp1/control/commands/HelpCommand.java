@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
@@ -18,6 +20,11 @@ public class HelpCommand extends NoParamsCommand {
 	@Override
 	public void execute(GameModel game, GameView view) {
 		view.showMessage(CommandGenerator.commandHelp());
+	}
+	
+	@Override
+	public String toString() {
+		return this.helpText();
 	}
 
 }

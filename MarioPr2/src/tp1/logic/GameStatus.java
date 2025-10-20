@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.logic;
 
 public interface GameStatus {
@@ -7,5 +9,4 @@ public interface GameStatus {
 	public int remainingTime();
 	public int points();
 	public int numLives();
-	//Puede que tambien sea necesaria DIM_X y DIM_Y
 }

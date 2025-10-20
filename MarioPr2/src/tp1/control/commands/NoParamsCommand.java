@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 public abstract class NoParamsCommand extends AbstractCommand {
@@ -9,13 +11,8 @@ public abstract class NoParamsCommand extends AbstractCommand {
 	@Override
 	public Command parse(String[] commandWords) {
 		NoParamsCommand aux = null;
-		if(commandWords.length == 1) {
-			if(new HelpCommand().matchCommandName(commandWords[0])) {
-				aux = new HelpCommand();
-			}
-			else if (new ExitCommand().matchCommandName(commandWords[0])) {
-				aux = new ExitCommand();
-			}
+		if(commandWords.length == 1 && this.matchCommandName(commandWords[0])) {
+			aux = this;
 		}
 		return aux;
 	}

@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
@@ -24,7 +26,6 @@ public abstract class AbstractCommand implements Command {
 	protected String getDetails() { return details; }
 	protected String getHelp() { return help; }
 	
-	// si falla debemos decirlo 
 	public abstract void execute(GameModel game, GameView view);	
 	
 	public abstract Command parse(String[] commandWords);

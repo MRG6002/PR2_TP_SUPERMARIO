@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
@@ -26,13 +28,13 @@ public class Mario extends MovingObject {
 	
 	public String getIcon() {
 		String aux = "";
-		if(this.direccion == Action.STOP)  {
+		if(this.dirEquals(Action.STOP))  {
 			aux = Messages.MARIO_STOP;
 		}
-		else if(this.direccion == Action.RIGHT) {
+		else if(this.dirEquals(Action.RIGHT)) {
 			aux = Messages.MARIO_RIGHT;
 		}
-		else if(this.direccion == Action.LEFT) {
+		else if(this.dirEquals(Action.LEFT)) {
 			aux = Messages.MARIO_LEFT;
 		}
 		return aux;
@@ -42,50 +44,29 @@ public class Mario extends MovingObject {
 		//automático
 		boolean marioPierdeVida = false;
 		if(this.actions.size() == 0) {
-			marioPierdeVida = this.movAutomaticoMario();
+			movAutomatico();
+			marioPierdeVida = this.game.doInteractionsFrom(this);
 		}
 		else {
 			int cont = 0;
 			while(cont < this.actions.size() && !marioPierdeVida) {
 				Action act = this.actions.get(cont);
-				if(act == Action.DOWN) {
-					if (this.MarioColisiona(act)) this.direccion = Action.STOP;
-					while(!this.MarioColisiona(act) && !this.pos.estaAbajo()) {
-						this.move(act);
-						this.game.doInteractionsFrom(this);
-					}
-					this.isFalling = false;
-					if(this.pos.estaAbajo()) {
-						this.game.perderVida();
-						if(this.game.numLives() > 0) {
-							this.game.resetGame();
-						}
-					}
-				}
-				else if(!this.MarioColisiona(act)) {
-					this.move(act);
-					marioPierdeVida = this.game.doInteractionsFrom(this);
-				}
-				else if(this.MarioColisiona(act)) {
-					if(act == Action.RIGHT) this.direccion = Action.LEFT;
-					else if(act == Action.LEFT) this.direccion = Action.RIGHT;
-				}
+				marioPierdeVida = movNoAutomaticoMario(act);
 				cont++;
 			}
 		}
-		this.isFalling = false;
+		this.notFalling();
 		this.actions = new ActionList();
 		if(marioPierdeVida) this.game.resetGame();
 	}
 	
-	private boolean movAutomaticoMario() {
-		boolean marioPierdeVida = false;
-		if(this.direccion != Action.STOP) {
-			if(this.MarioColisiona(Action.DOWN)) {
-				if(this.MarioColisiona(this.direccion) || this.pos.EsBorde(this.direccion == Action.RIGHT)) {
+	private void movAutomatico() {
+		if(!this.dirEquals(Action.STOP)) {
+			if(this.marioColisiona(Action.DOWN)) {
+				if(this.marioColisiona(this.getDireccion()) || this.pos.EsBorde(this.dirEquals(Action.RIGHT))) {
 					this.invertirDireccion();
 				}
-				else this.move(this.direccion);
+				else this.move(this.getDireccion());
 			}
 			else {
 				if(this.pos.estaAbajo()) {
@@ -94,18 +75,39 @@ public class Mario extends MovingObject {
 				}
 				else this.move(Action.DOWN);
 			}
+		}
+	}
+	
+	private boolean movNoAutomaticoMario(Action act) {
+		boolean marioPierdeVida = false;
+		if(act == Action.DOWN) {
+			if (this.marioColisiona(act)) this.changeDireccion(Action.STOP);
+			while(!this.marioColisiona(act) && !this.pos.estaAbajo()) {
+				this.move(act);
+				this.game.doInteractionsFrom(this);
+			}
+			this.notFalling();
+			if(this.pos.estaAbajo()) {
+				this.game.perderVida();
+				if(this.game.numLives() > 0) {
+					this.game.resetGame();
+				}
+			}
+		}
+		else if(!this.marioColisiona(act)) {
+			this.move(act);
 			marioPierdeVida = this.game.doInteractionsFrom(this);
+		}
+		else if(this.marioColisiona(act)) {
+			if(act == Action.RIGHT) this.changeDireccion(Action.LEFT);
+			else if(act == Action.LEFT) this.changeDireccion(Action.RIGHT);
 		}
 		return marioPierdeVida;
 	}
 	
-	public boolean MarioColisiona(Action act) {
+	public boolean marioColisiona(Action act) {
 		Position pos = new Position(act.getX(), act.getY());
-		if(this.big && this.game.isSolid(pos.sumar(this.posBig))) {
-			return true;
-		}
-		if(this.game.isSolid(pos.sumar(this.pos))) return true;
-		return false;
+		return (this.big && this.game.isSolid(pos.sumar(this.posBig)))||(this.game.isSolid(pos.sumar(this.pos)));
 	}
 	
 	public boolean interactWith(ExitDoor door) {
@@ -116,11 +118,11 @@ public class Mario extends MovingObject {
 		boolean marioPierdeVida = false;
 		if(goomba.isAlive()) {
 			if(goomba.isInPosition(this.pos) || (this.big && goomba.isInPosition(this.posBig))) {
-				if(this.big && !this.isFalling) {
+				if(this.big && !this.isFalling()) {
 					this.big = false;
 					this.posBig = null;
 				}
-				else if (!this.isFalling) {
+				else if (!this.isFalling()) {
 					this.game.perderVida();
 					marioPierdeVida = true;
 				}
@@ -133,9 +135,9 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public void move(Action act) {
-		this.isFalling = false;
-		if(act == Action.RIGHT || act == Action.LEFT || act == Action.STOP) this.direccion = act;
-		if (act == Action.DOWN) this.isFalling = true;
+		this.notFalling();
+		if(act == Action.RIGHT || act == Action.LEFT || act == Action.STOP) this.changeDireccion(act);
+		if (act == Action.DOWN) this.falling();
 		super.move(act);
 		if(this.big && this.pos.sumar(new Position (0, -1)).esValida()) 
 			this.posBig = new Position(this.pos.sumar(new Position (0, -1)));
@@ -143,7 +145,8 @@ public class Mario extends MovingObject {
 		
 	@Override
 	public String toString () {
-		return "Mario " + this.pos.toString() + " " + this.getIcon() + " Big:" + this.big + " Cayendo:" + this.isFalling; 
+		return "Mario " + super.toString() + " " + this.getIcon() + " Big:" + this.big + " Cayendo:" + this.isFalling() + 
+				this.actions.toString(); 
 	}
 		
 	public void addAction(Action action) {

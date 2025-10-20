@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
@@ -19,7 +21,7 @@ public class ResetCommand extends AbstractCommand {
 	@Override
 	public Command parse(String[] commandWords) {
 		ResetCommand command = null;
-		if(new ResetCommand().matchCommandName(commandWords[0])) {
+		if(this.matchCommandName(commandWords[0])) {
 			if(commandWords.length == 1) command = new ResetCommand();
 			else if(commandWords.length == 2) {
 				command = new ResetCommand();
@@ -42,6 +44,9 @@ public class ResetCommand extends AbstractCommand {
 		else view.showMessage(Messages.ERROR.formatted(Messages.INVALID_LEVEL_NUMBER));
 	}
 
-
+	@Override
+	public String toString() {
+		return this.helpText() + " numLevel:" + this.numLevel;
+	}
 
 }

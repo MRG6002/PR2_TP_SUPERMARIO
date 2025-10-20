@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import java.util.Arrays;
@@ -35,5 +37,4 @@ public class CommandGenerator {
 		
 		return commands.toString();
 	}
-
 }

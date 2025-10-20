@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
@@ -18,9 +20,12 @@ public class ExitCommand extends NoParamsCommand{
 
 	@Override
 	public void execute(GameModel game, GameView view){
-		// You should let the game know that you are leaving so that 
-		// if it needs to close something, it can close it and finish.
 		game.abandona();
+	}
+	
+	@Override
+	public String toString() {
+		return this.helpText();
 	}
 
 }

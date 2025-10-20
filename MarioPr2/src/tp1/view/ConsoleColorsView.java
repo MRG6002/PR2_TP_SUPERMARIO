@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.view;
 
 import static tp1.util.MyStringUtils.center;

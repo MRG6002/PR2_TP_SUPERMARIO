@@ -117,4 +117,18 @@ public class GameObjectContainer {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		string.append(this.mario.toString());
+		string.append(this.door.toString());
+		for(Land land: this.listLand) {
+			string.append(land.toString());
+		}
+		for(Goomba goomba: this.listGoomba) {
+			string.append(goomba.toString());
+		}
+		return string.toString();
+	}
 }

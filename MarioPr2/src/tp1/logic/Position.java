@@ -52,17 +52,4 @@ public final class Position {
 	public boolean estaAbajo() {
 		return this.row == Game.DIM_Y - 1;
 	}
-
-	public boolean enDerechaDe(Position pos) {
-		return pos.col < this.col;
-	}
-	
-	public boolean enIzquierdaDe(Position pos) {
-		return pos.col > this.col;
-	}
-	
-	public boolean encimaDe(Position pos) {
-		return this.row < pos.row;
-	}
-
 }

@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.Action;
@@ -11,7 +13,6 @@ public class ActionCommand extends AbstractCommand{
     private static final String SHORTCUT = Messages.COMMAND_ACTION_SHORTCUT;
     private static final String DETAILS = Messages.COMMAND_ACTION_DETAILS;
     private static final String HELP = Messages.COMMAND_ACTION_HELP;
-	//private ActionList actions = new ActionList();
     private String[] actions;
     
 	public ActionCommand() {
@@ -21,7 +22,7 @@ public class ActionCommand extends AbstractCommand{
 	@Override
 	public Command parse(String[] commandWords) {
 		ActionCommand command = null;
-		if(new ActionCommand().matchCommandName(commandWords[0]) && commandWords.length > 1) {
+		if(this.matchCommandName(commandWords[0]) && commandWords.length > 1) {
 			command = new ActionCommand();
 			command.actions = commandWords;
 		}
@@ -52,9 +53,17 @@ public class ActionCommand extends AbstractCommand{
 				sto++;
 				game.addAction(Action.STOP);
 			}
-			//else view.showMessage(Messages.ERROR.formatted(Messages.UNKNOWN_ACTION.formatted(this.actions[i])));
 		}
 		game.update();
 		view.showGame();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		for(String aux: this.actions) {
+			string.append(aux + " ");
+		}
+		return this.helpText() + " Actions: " + string;
 	}
 }

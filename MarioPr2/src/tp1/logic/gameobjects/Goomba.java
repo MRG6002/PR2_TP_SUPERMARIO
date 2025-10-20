@@ -1,3 +1,5 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
@@ -16,13 +18,12 @@ public class Goomba extends MovingObject {
 	}
 	
 	public void update() { //actualizaciones para Goombas
-		Position pos = new Position(this.direccion.getX(), this.direccion.getY());
+		Position pos = new Position(this.getDireccion().getX(), this.getDireccion().getY());
 		if(this.game.isSolid(this.pos.sumar(new Position(0,1)))) {
-			if(this.game.isSolid(this.pos.sumar(pos)) || this.pos.EsBorde(this.direccion == Action.RIGHT)) {
-				if(this.direccion.getX() == 1) this.direccion = Action.LEFT;
-				else this.direccion = Action.RIGHT;
+			if(this.game.isSolid(this.pos.sumar(pos)) || this.pos.EsBorde(this.dirEquals(Action.RIGHT))) {
+				this.invertirDireccion();
 			}
-			else this.move(this.direccion);
+			else this.move(this.getDireccion());
 		}
 		else {
 			if(this.pos.estaAbajo()) {
@@ -39,7 +40,7 @@ public class Goomba extends MovingObject {
 	
 	@Override
 	public String toString() {
-		return "Goomba " + this.pos.toString() + " vivo:" + this.isAlive() + " Direccion:" + this.direccion.toString();
+		return "Goomba " + super.toString() + " vivo:" + this.isAlive() + " Direccion:" + this.getDireccion().toString();
 	}
 }
 

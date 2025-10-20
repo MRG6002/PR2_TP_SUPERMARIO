@@ -1,10 +1,12 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
 import tp1.view.GameView;
 import tp1.view.Messages;
 
-public class UpdateCommand extends AbstractCommand{
+public class UpdateCommand extends NoParamsCommand{
 	
 	private static final String NAME = Messages.COMMAND_UPDATE_NAME;
     private static final String SHORTCUT = Messages.COMMAND_UPDATE_SHORTCUT;
@@ -16,20 +18,18 @@ public class UpdateCommand extends AbstractCommand{
 	}
 	
 	@Override
-	public Command parse(String[] commandWords) {
-		UpdateCommand command = null;
-		if(commandWords[0] == "" || new UpdateCommand().matchCommandName(commandWords[0])) {
-			command = new UpdateCommand();
-		}
-		return command;
+	public boolean matchCommandName(String command) {
+		return super.matchCommandName(command) || command == "";
 	}
-
 
 	@Override
 	public void execute(GameModel game, GameView view) {
 		game.update();
 		view.showGame();
 	}
-
-
+	
+	@Override
+	public String toString() {
+		return this.helpText();
+	}
 }

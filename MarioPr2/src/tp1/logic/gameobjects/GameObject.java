@@ -1,10 +1,12 @@
+//Grupo 13: MarioRosellGarcía - XiangLin
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
 
-public abstract class GameObject { // TODO 
+public abstract class GameObject {
 
 	protected Position pos; // If you can, make it private.
 	private boolean isAlive;
@@ -38,5 +40,10 @@ public abstract class GameObject { // TODO
 	protected void move(Action dir) {
 		Position pos = new Position(dir.getX(), dir.getY()).sumar(this.pos);
 		if(pos.esValida()) this.pos = pos;
+	}
+	
+	@Override
+	public String toString() {
+		return this.pos.toString() + " isAlive:" + this.isAlive;
 	}
 }
