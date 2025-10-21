@@ -55,43 +55,13 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	}
 	
 	private void initLevel1() {
-		//Lands
-		for(int i = 0; i < 15; i++) {
-			this.GameObjectContainer.add(new Land(new Position(i, 14)));
-			this.GameObjectContainer.add(new Land(new Position(i, 13)));
-		}
-		for(int i = 17; i < 30; i++) {
-			this.GameObjectContainer.add(new Land(new Position(i, 14)));
-			this.GameObjectContainer.add(new Land(new Position(i, 13)));
-		}
-		int tamX = 8;
-		int posIniX = Game.DIM_X-3-tamX, posIniY = Game.DIM_Y-3;
-						
-		for(int col = 0; col < tamX; col++) {
-			for (int fila = 0; fila < col+1; fila++) {
-				GameObjectContainer.add(new Land(new Position(posIniX + col, posIniY - fila)));
-			}
-		}
-
-		this.GameObjectContainer.add(new Land(new Position(9,12)));
-		this.GameObjectContainer.add(new Land(new Position(12, 12)));
-		this.GameObjectContainer.add(new Land(new Position(2, 9)));
-		this.GameObjectContainer.add(new Land(new Position(5, 9)));
-		this.GameObjectContainer.add(new Land(new Position(6, 9)));
-		this.GameObjectContainer.add(new Land(new Position(7, 9)));
-		this.GameObjectContainer.add(new Land(new Position(6, 5)));
-		//Mario y puerta
-		this.mario = new Mario(this, new Position(0, 12));
-		this.GameObjectContainer.add(this.mario);
-		this.GameObjectContainer.add(new ExitDoor(new Position(29, 12)));
-		//Goombas
+		initLevel0();
 		this.GameObjectContainer.add(new Goomba(this, new Position(6, 12)));
 		this.GameObjectContainer.add(new Goomba(this, new Position(8, 12)));
 		this.GameObjectContainer.add(new Goomba(this, new Position(11, 12)));
 		this.GameObjectContainer.add(new Goomba(this, new Position(14, 12)));
 		this.GameObjectContainer.add(new Goomba(this, new Position(10, 10)));
 		this.GameObjectContainer.add(new Goomba(this, new Position(6, 4)));
-		this.GameObjectContainer.add(new Goomba(this, new Position(19, 0)));
 	}
 	
 	public Game(int nLevel) {
@@ -168,8 +138,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.GameObjectContainer.update();
 	}
 	
-	public boolean doInteractionsFrom(Mario mario) {
-		return this.GameObjectContainer.doInteractionsFrom(mario);
+	public void doInteractionsFrom(Mario mario) {
+		this.GameObjectContainer.doInteractionsFrom(mario);
 	}
 	
 	public void addAction(Action action) {
@@ -188,6 +158,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	public void perderVida() {
 		if(this.numVidas > 0) numVidas--;
+		if(this.numVidas > 0) this.resetGame();
 	}
 	
 	public void restarTiempo() {

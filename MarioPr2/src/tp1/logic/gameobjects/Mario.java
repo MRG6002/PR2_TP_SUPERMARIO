@@ -42,44 +42,26 @@ public class Mario extends MovingObject {
 	
 	public void update() {
 		//automático
-		boolean marioPierdeVida = false;
 		if(this.actions.size() == 0) {
-			movAutomatico();
-			marioPierdeVida = this.game.doInteractionsFrom(this);
+			if(!this.dirEquals(Action.STOP)) movAutomatico();
+			this.game.doInteractionsFrom(this);
 		}
 		else {
 			int cont = 0;
-			while(cont < this.actions.size() && !marioPierdeVida) {
+			while(cont < this.actions.size() && this.isAlive()) {
 				Action act = this.actions.get(cont);
-				marioPierdeVida = movNoAutomaticoMario(act);
+				movNoAutomaticoMario(act);
 				cont++;
 			}
 		}
 		this.notFalling();
 		this.actions = new ActionList();
-		if(marioPierdeVida) this.game.resetGame();
-	}
-	
-	private void movAutomatico() {
-		if(!this.dirEquals(Action.STOP)) {
-			if(this.marioColisiona(Action.DOWN)) {
-				if(this.marioColisiona(this.getDireccion()) || this.pos.EsBorde(this.dirEquals(Action.RIGHT))) {
-					this.invertirDireccion();
-				}
-				else this.move(this.getDireccion());
-			}
-			else {
-				if(this.pos.estaAbajo()) {
-					this.game.perderVida();
-					this.game.resetGame();
-				}
-				else this.move(Action.DOWN);
-			}
+		if(this.isAlive() == false) {
+			this.game.perderVida();
 		}
 	}
 	
-	private boolean movNoAutomaticoMario(Action act) {
-		boolean marioPierdeVida = false;
+	private void movNoAutomaticoMario(Action act) {
 		if(act == Action.DOWN) {
 			if (this.marioColisiona(act)) this.changeDireccion(Action.STOP);
 			while(!this.marioColisiona(act) && !this.pos.estaAbajo()) {
@@ -88,24 +70,20 @@ public class Mario extends MovingObject {
 			}
 			this.notFalling();
 			if(this.pos.estaAbajo()) {
-				this.game.perderVida();
-				if(this.game.numLives() > 0) {
-					this.game.resetGame();
-				}
+				this.dead();
 			}
 		}
 		else if(!this.marioColisiona(act)) {
 			this.move(act);
-			marioPierdeVida = this.game.doInteractionsFrom(this);
+			this.game.doInteractionsFrom(this);
 		}
 		else if(this.marioColisiona(act)) {
 			if(act == Action.RIGHT) this.changeDireccion(Action.LEFT);
 			else if(act == Action.LEFT) this.changeDireccion(Action.RIGHT);
 		}
-		return marioPierdeVida;
 	}
 	
-	public boolean marioColisiona(Action act) {
+	public boolean marioColisiona(Action act) { //necesitamos esta comprobacion para evitar choques con la cabeza
 		Position pos = new Position(act.getX(), act.getY());
 		return (this.big && this.game.isSolid(pos.sumar(this.posBig)))||(this.game.isSolid(pos.sumar(this.pos)));
 	}
@@ -114,8 +92,7 @@ public class Mario extends MovingObject {
 		return door.isInPosition(this.pos);
 	}
 	
-	public boolean interactWith (Goomba goomba) {
-		boolean marioPierdeVida = false;
+	public void interactWith (Goomba goomba) {
 		if(goomba.isAlive()) {
 			if(goomba.isInPosition(this.pos) || (this.big && goomba.isInPosition(this.posBig))) {
 				if(this.big && !this.isFalling()) {
@@ -124,13 +101,11 @@ public class Mario extends MovingObject {
 				}
 				else if (!this.isFalling()) {
 					this.game.perderVida();
-					marioPierdeVida = true;
 				}
 				game.sumar100();
 				goomba.recieveInteraction(this);
 			}
 		}
-		return marioPierdeVida;
 	}
 	
 	@Override

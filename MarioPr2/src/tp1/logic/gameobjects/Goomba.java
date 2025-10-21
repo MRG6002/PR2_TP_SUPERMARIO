@@ -18,19 +18,7 @@ public class Goomba extends MovingObject {
 	}
 	
 	public void update() { //actualizaciones para Goombas
-		Position pos = new Position(this.getDireccion().getX(), this.getDireccion().getY());
-		if(this.game.isSolid(this.pos.sumar(new Position(0,1)))) {
-			if(this.game.isSolid(this.pos.sumar(pos)) || this.pos.EsBorde(this.dirEquals(Action.RIGHT))) {
-				this.invertirDireccion();
-			}
-			else this.move(this.getDireccion());
-		}
-		else {
-			if(this.pos.estaAbajo()) {
-				this.dead();
-			}
-			else this.move(Action.DOWN);
-		}
+		this.movAutomatico();
 	}
 	
 	public boolean recieveInteraction(Mario mario) {

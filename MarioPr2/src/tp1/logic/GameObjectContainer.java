@@ -100,13 +100,11 @@ public class GameObjectContainer {
 		this.mario.addAction(action);
 	}
 	
-	public boolean doInteractionsFrom(Mario mario) {
-		boolean marioPierdeVida = false;
+	public void doInteractionsFrom(Mario mario) {
 		for(int i = 0; i < this.listGoomba.size(); i++) {
 			Goomba goomba = this.listGoomba.get(i);
-			if(mario.interactWith(goomba)) marioPierdeVida = true;
+			mario.interactWith(goomba);
 		}
-		return marioPierdeVida;
 	}
 	
 	//cuando cambie gameObjectContainer recorreremos la unica lista de objects

@@ -16,6 +16,24 @@ public abstract class MovingObject extends GameObject{
 		this.isFalling = false;
 	}
 	
+	protected void movAutomatico() {
+		Position pos = new Position(this.getDireccion().getX(), this.getDireccion().getY());
+		if(this.game.isSolid(this.pos.sumar(new Position(0,1)))) {
+			if(this.game.isSolid(this.pos.sumar(pos)) || this.pos.EsBorde(this.dirEquals(Action.RIGHT))) {
+				this.invertirDireccion();
+			}
+			else {
+				this.move(this.getDireccion());
+			}
+		}
+		else {
+			if(this.pos.estaAbajo()) {
+				this.dead();
+			}
+			else this.move(Action.DOWN);
+		}
+	}
+	
 	public boolean isSolid() {
 		return false;
 	}
