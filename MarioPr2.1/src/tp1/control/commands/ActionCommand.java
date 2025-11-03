@@ -7,12 +7,13 @@ import tp1.logic.ActionList;
 import tp1.logic.GameModel;
 
 import tp1.view.GameView;
+import tp1.view.Messages;
 
 public class ActionCommand extends AbstractCommand {
-	private static final String NAME = "action";
-	private static final String SHORTCUT = "a";
-	private static final String DETAILS = "[a]ction [[R]IGHT | [L]EFT | [U]P | [D]OWN | [S]TOP]+";
-	private static final String HELP = "user performs actions";
+	private static final String NAME = Messages.COMMAND_ACTION_NAME;
+	private static final String SHORTCUT = Messages.COMMAND_ACTION_SHORTCUT;
+	private static final String DETAILS = Messages.COMMAND_ACTION_DETAILS;
+	private static final String HELP = Messages.COMMAND_ACTION_HELP;
 	
 	private ActionList actionList;
 

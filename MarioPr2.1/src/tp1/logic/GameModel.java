@@ -9,5 +9,5 @@ public interface GameModel {
 	public void update();
 	public void exit();
 	public void reset();
-	public void reset(int level);
+	public boolean reset(int level);
 }

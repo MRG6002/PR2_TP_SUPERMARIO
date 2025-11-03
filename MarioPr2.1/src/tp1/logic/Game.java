@@ -55,13 +55,15 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	}
 	
 	public void reset() {
-		if(this.level == 0) this.initLevel0();
-		else this.initLevel1(); // this.level == 1
+		reset(this.level);
 	}
 	
-	public void reset(int level) {
-		if(level == 0) this.initLevel0();
-		else this.initLevel1(); // level == 1
+	public boolean reset(int level) {
+		boolean levelExists = true;
+		if (level == 0) this.initLevel0();
+		else if(level == 1) this.initLevel1(); // level == 1
+		else levelExists = false;
+		return levelExists;
 	}
 	
 	public boolean isSolid(Position position) {
@@ -143,7 +145,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		gameObjectContainer.add(new Land(new Position(9, 7), this));
 		gameObjectContainer.add(new Land(new Position(5, 6), this));
 
-		int tamX = 8, tamY = 8;
+		int tamX = 8;
 		int posIniX = Game.DIM_X - 3 - tamX, posIniY = Game.DIM_Y - 3;
 		
 		for(int col = 0; col < tamX; col++) {

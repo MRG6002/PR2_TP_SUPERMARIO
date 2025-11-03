@@ -8,33 +8,31 @@ import tp1.view.GameView;
 import tp1.view.Messages;
 
 public class ResetCommand extends AbstractCommand {
-	private static final String NAME = "reset";
-	private static final String SHORTCUT = "r";
-	private static final String DETAILS = "[r]eset [numLevel]";
-	private static final String HELP = "reset the game to initial configuration if not numLevel else load the numLevel map";
-	
+	private static final String NAME = Messages.COMMAND_RESET_NAME;
+	private static final String SHORTCUT = Messages.COMMAND_RESET_SHORTCUT;
+	private static final String DETAILS = Messages.COMMAND_RESET_DETAILS;
+	private static final String HELP = Messages.COMMAND_RESET_HELP;
+	private boolean levelExists;
 	private int level;
 
 	public ResetCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
-		this.level = -1;
+		this.levelExists = false;
 	}
 	
 	public ResetCommand(int level) {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 		this.level = level;
+		this.levelExists = true;
 	}
 
 	@Override
 	public void execute(GameModel game, GameView view) {
-		if(this.level == -1) {
+		if(!this.levelExists) {
 			game.reset();
 			view.showGame();
 		}
-		else if(this.level == 0 || this.level == 1)  {
-			game.reset(level);
-			view.showGame();
-		}
+		else if(game.reset(level)) view.showGame();
 		else view.showError(Messages.INVALID_LEVEL_NUMBER);
 	}
 
