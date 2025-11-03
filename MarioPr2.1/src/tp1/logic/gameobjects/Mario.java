@@ -87,14 +87,39 @@ public class Mario extends MovingObject {
 		this.actionList.addLast(action);
 	}
 	
-	//falta que a Mario le afecten las interacciones
-	//posible llamada desde door o goomba
+
 	public  boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position);
 		if(interaction) {
 			item.receiveInteraction(this);
 		}
 		return interaction;
+	}
+	
+	@Override
+	public  boolean receiveInteraction(ExitDoor obj) {
+		this.game.marioExited();
+	return true;
+	}
+	
+	//la comprobacion de inPosition no debe hacerse aqui
+	//si no lo esta, no se llama a la funcion
+	@Override
+	public  boolean receiveInteraction(Goomba obj) {
+		boolean interaction = false;
+		if(obj.isAlive()) {
+			if(obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)))) {
+				interaction = true;
+				if(this.big) {
+					if(!super.isFalling()) this.big = false;
+				}
+				else {
+					if(!super.isFalling()) this.game.marioDead();
+				}
+				this.game.addPoints();
+			}
+		}
+	return interaction;
 	}
 	
 	/*public boolean interactWith(ExitDoor exitDoor) {

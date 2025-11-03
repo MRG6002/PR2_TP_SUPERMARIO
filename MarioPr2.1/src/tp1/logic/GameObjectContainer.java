@@ -5,11 +5,11 @@ package tp1.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import tp1.logic.gameobjects.Land;
+import tp1.logic.gameobjects.GameObject;
+/*import tp1.logic.gameobjects.Land;
 import tp1.logic.gameobjects.Goomba;
 import tp1.logic.gameobjects.ExitDoor;
-import tp1.logic.gameobjects.GameObject;
-import tp1.logic.gameobjects.Mario;
+import tp1.logic.gameobjects.Mario;*/
 
 import tp1.view.Messages;
 
@@ -28,10 +28,12 @@ public class GameObjectContainer {
 		removeDead();
 	}
 	
-	private void doInteractionsFrom(GameObject object) {
-		for(GameObject o: this.objects) {
-			o.interactWith(object);
-			object.interactWith(o);
+	public void doInteractionsFrom(GameObject object) {
+		if(object.isAlive()) {
+			for(GameObject o: this.objects) {
+				object.interactWith(o);
+				o.interactWith(object);
+			}
 		}
 	}
 	/*private List<Land> landList;
@@ -67,8 +69,8 @@ public class GameObjectContainer {
 	}
 	
 	public boolean isSolid(Position position) {
-		for(Land land: landList) {
-			if(land.isInPosition(position)) return true;
+		for(GameObject o: objects) {
+			if(o.isSolid() && o.isInPosition(position)) return true;
 		}
 	return false;
 	}
@@ -81,12 +83,17 @@ public class GameObjectContainer {
 		this.deleteDead();
 	}*/
 	
-	public void doInteractionsFrom(Mario mario) {
+	/*public void doInteractionsFrom(Mario mario) {
 		for(Goomba goomba: this.goombaList) mario.interactWith(goomba);
-	}
+	}*/
 
 	public String postitionToString(Position position) {
-		for(Land land: this.landList) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for(GameObject o: this.objects) {
+			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
+		}
+		return stringBuilder.toString();
+		/*for(Land land: this.landList) {
 			if(land.isInPosition(position)) return land.getIcon();
 		}
 		
@@ -96,19 +103,14 @@ public class GameObjectContainer {
 			if(goomba.isInPosition(position)) stringBuilder.append(goomba.getIcon());
 		}
 		if(this.exitDoor.isInPosition(position)) stringBuilder.append(this.exitDoor.getIcon());
-		if(this.mario.isInPosition(position) && this.mario.isAlive()) stringBuilder.append(this.mario.getIcon());
-	return stringBuilder.toString();
+		if(this.mario.isInPosition(position) && this.mario.isAlive()) stringBuilder.append(this.mario.getIcon());*/
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		
-		stringBuilder.append(Messages.LINE.formatted("GAMEOBJECTCONTAINER:"));
-		for(Land land: this.landList) stringBuilder.append(Messages.LINE.formatted(land.toString()));
-		stringBuilder.append(Messages.LINE.formatted(this.exitDoor.toString()));
-		stringBuilder.append(Messages.LINE.formatted(this.mario.toString()));
-		for(Goomba goomba: this.goombaList) stringBuilder.append(Messages.LINE.formatted(goomba.toString()));
+		stringBuilder.append(Messages.LINE.formatted("GAME_OBJECT_CONTAINER:"));
+		for(GameObject o: this.objects) stringBuilder.append(Messages.LINE.formatted(o.toString()));
 	return stringBuilder.toString();
 	}
 }

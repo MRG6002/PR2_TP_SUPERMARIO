@@ -24,18 +24,25 @@ public class Goomba extends MovingObject {
 	return "GOOMBA: " + super.toString() + " NOT SOLID";
 	}
 	
-	public boolean receiveInteraction(Mario mario) {
+	/*public boolean receiveInteraction(Mario mario) {
 		super.dead();
 		this.game.addPoints();
 	return true;
-	}
+	}*/
 	
-	//desde aqui mario recibe la interaccion con goomba
+	//goomba solo interactua con Mario
+	//debemos hacer comprobacion de las dos pos de mario
 	public  boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position);
 		if(interaction) {
 			item.receiveInteraction(this);
 		}
 		return interaction;
+	}
+	
+	@Override
+	public  boolean receiveInteraction(Mario obj) {
+		super.dead();
+	return true;
 	}
 }
