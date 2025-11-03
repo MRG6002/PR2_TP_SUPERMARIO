@@ -15,10 +15,17 @@ import tp1.view.Messages;
 
 public class GameObjectContainer {
 	private List<GameObject> objects;
+	private List<GameObject> lands; // para el testeo nos molestan los lands
+	public GameObjectContainer() {objects = new ArrayList<>();
+	lands = new ArrayList<>();
+	}
 	
-	public GameObjectContainer() {objects = new ArrayList<>();}
-	
-	public void add(GameObject object) {objects.add(object);}
+	public void add(GameObject object) {
+		if(object.getIcon() == Messages.LAND) {
+			lands.add(object);
+		}
+		else objects.add(object);
+	}
 	
 	public void update() {
 		for (GameObject object : objects) {
@@ -31,8 +38,8 @@ public class GameObjectContainer {
 	public void doInteractionsFrom(GameObject object) {
 		if(object.isAlive()) {
 			for(GameObject o: this.objects) {
-				object.interactWith(o);
 				o.interactWith(object);
+				object.interactWith(o);
 			}
 		}
 	}
@@ -69,7 +76,7 @@ public class GameObjectContainer {
 	}
 	
 	public boolean isSolid(Position position) {
-		for(GameObject o: objects) {
+		for(GameObject o: lands) {
 			if(o.isSolid() && o.isInPosition(position)) return true;
 		}
 	return false;
@@ -90,6 +97,9 @@ public class GameObjectContainer {
 	public String postitionToString(Position position) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(GameObject o: this.objects) {
+			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
+		}
+		for(GameObject o: this.lands) {
 			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
 		}
 		return stringBuilder.toString();

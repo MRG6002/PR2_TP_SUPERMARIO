@@ -70,14 +70,14 @@ public class Mario extends MovingObject {
 			}
 			else if(action == Action.UP) {
 				super.up(big);
-				this.game.doInteractionsFrom(this);
+				//this.game.doInteractionsFrom(this);
 			}
 			else if (action == Action.STOP){
 				super.stop();
 			}
 			else { // action.isAction(Action.LEFT) || action.isAction(Action.RIGHT)
 				super.doAction(action);
-				this.game.doInteractionsFrom(this);
+				//this.game.doInteractionsFrom(this);
 			}
 		}
 		this.actionList.clear();
