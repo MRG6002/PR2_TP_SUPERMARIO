@@ -98,7 +98,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	private void restrictions(Action action) {
 		if(action != null) {
-			if(action.isAction(Action.STOP) || (this.mario.count(action) < 4 && !this.mario.isOpposite(action))) this.mario.addAction(action);
+			if(action == Action.STOP || (this.mario.count(action) < 4 && !this.mario.isOpposite(action))) this.mario.addAction(action);
 		}
 	}
 	

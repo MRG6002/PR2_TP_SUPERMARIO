@@ -13,16 +13,6 @@ public class Goomba extends MovingObject {
 	public Goomba(Position position, GameWorld game) {
 		super(position, game, Action.LEFT);
 	}
-	
-	@Override
-	public boolean isSolid() {
-	return false;
-	}
-	
-	@Override
-	public void update() {
-		super.automaticMovement();
-	}
 
 	@Override
 	public String getIcon() {

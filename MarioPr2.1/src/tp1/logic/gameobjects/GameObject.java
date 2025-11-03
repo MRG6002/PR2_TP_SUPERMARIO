@@ -34,7 +34,7 @@ public abstract class GameObject {
 		this.position = this.position.go(direction);
 	}
 	
-	public abstract boolean isSolid();
+	public boolean isSolid() {return false;}
 	public abstract void update();
 	public abstract String getIcon();
 	public abstract String toString();

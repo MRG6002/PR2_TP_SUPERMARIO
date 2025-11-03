@@ -25,17 +25,12 @@ public class Mario extends MovingObject {
 	}
 	
 	@Override
-	public boolean isSolid() {
-	return false;
-	}
-	
-	@Override
 	public void update() {
 		Position position = this.position.go(Action.STOP); // Guardamos la position actual
 
 		this.playerMovement();
 		if(this.position.equals(position) && !super.isInDirection(Action.STOP)) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
-			super.automaticMovement();
+			super.update();
 			this.game.doInteractionsFrom(this);
 			if(!super.isAlive()) this.game.marioDead();
 		}
@@ -66,18 +61,18 @@ public class Mario extends MovingObject {
 	
 	private void playerMovement() {
 		for(Action action: this.actionList) {
-			if(action.isAction(Action.DOWN)) {
+			if(action == Action.DOWN) {
 				if(this.game.isSolid(this.position.go(Action.DOWN))) super.stop();
 				else {
 					while(super.freeFalling()) this.game.doInteractionsFrom(this);
 					if(!super.isAlive()) this.game.marioDead();
 				}
 			}
-			else if(action.isAction(Action.UP)) {
+			else if(action == Action.UP) {
 				super.up(big);
 				this.game.doInteractionsFrom(this);
 			}
-			else if (action.isAction(Action.STOP)){
+			else if (action == Action.STOP){
 				super.stop();
 			}
 			else { // action.isAction(Action.LEFT) || action.isAction(Action.RIGHT)
@@ -121,12 +116,12 @@ public class Mario extends MovingObject {
 	
 	public int count(Action action) {
 		int n = 0;
-		for(Action aux: this.actionList) if(aux.isAction(action)) n++;
+		for(Action aux: this.actionList) if(aux == action) n++;
 	return n;
 	}
 	
 	public boolean isOpposite(Action action) {
-		for(Action aux: this.actionList) if(aux.isAction(Action.opposite(action))) return true;
+		for(Action aux: this.actionList) if(aux == Action.opposite(action)) return true;
 	return false;
 	}
 }

@@ -14,11 +14,6 @@ public class ExitDoor extends GameObject {
 	}
 	
 	@Override
-	public boolean isSolid() {
-	return false;
-	}
-	
-	@Override
 	public void update() {
 	}
 	

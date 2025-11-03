@@ -18,7 +18,7 @@ public abstract class MovingObject extends GameObject {
 		this.isFalling = false;
 	}
 	
-	protected void automaticMovement() {
+	public void update() {
 		if(this.game.isSolid(this.position.go(Action.DOWN))) {
 			this.isFalling = false;
 			this.doAction(this.direction);
@@ -36,7 +36,7 @@ public abstract class MovingObject extends GameObject {
 	}
 	
 	protected boolean isInDirection(Action direction) {
-	return this.direction.isAction(direction);
+	return this.direction == direction;
 	}
 	
 	protected boolean freeFalling() {

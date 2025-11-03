@@ -14,9 +14,7 @@ public class Land extends GameObject {
 	}
 	
 	@Override
-	public boolean isSolid() {
-	return true;
-	}
+	public boolean isSolid() {return true; }
 	
 	@Override
 	public void update() {

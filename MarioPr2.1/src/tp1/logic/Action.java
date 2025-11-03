@@ -25,9 +25,9 @@ public enum Action {
 	return y;
 	}
 	
-	public boolean isAction(Action action) {
+	/*public boolean isAction(Action action) {
 	return this.x == action.getX() && this.y == action.getY();
-	}
+	}*/
 	
 	public static Action parseAction(String commandWord) {
 		Action action = null;
@@ -42,22 +42,10 @@ public enum Action {
 	public static Action opposite(Action action) {
 		Action aux = null;
 		
-		if(action.isAction(Action.LEFT)) aux = Action.RIGHT;
-		else if(action.isAction(Action.RIGHT)) aux = Action.LEFT;
-		else if(action.isAction(Action.UP)) aux = Action.DOWN;
-		else if(action.isAction(Action.DOWN)) aux = Action.UP;
+		if(action == Action.LEFT) aux = Action.RIGHT;
+		else if(action == Action.RIGHT) aux = Action.LEFT;
+		else if(action == Action.UP) aux = Action.DOWN;
+		else if(action == Action.DOWN) aux = Action.UP;
 	return aux;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		
-		if(this.x == -1 && this.y == 0) stringBuilder.append("LEFT");
-		else if(this.x == 1 && this.y == 0) stringBuilder.append("RIGHT");
-		else if(this.x == 0 && this.y == 1) stringBuilder.append("DOWN");
-		else if(this.x == 0 && this.y == -1) stringBuilder.append("UP");
-		else stringBuilder.append("STOP");
-	return stringBuilder.toString();
 	}
 }

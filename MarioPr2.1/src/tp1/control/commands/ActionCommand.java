@@ -17,12 +17,11 @@ public class ActionCommand extends AbstractCommand {
 	private static final String DETAILS = Messages.COMMAND_ACTION_DETAILS;
 	private static final String HELP = Messages.COMMAND_ACTION_HELP;
 	private List<Action> actionList;
-	//private ActionList actionList;
 
 	public ActionCommand(List<Action> actionList) {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 		this.actionList = new ArrayList<>();
-		if(actionList != null) for(Action action: actionList) this.actionList.addLast(action);
+		if(actionList != null) this.actionList = actionList;
 	}
 
 	@Override
@@ -37,11 +36,10 @@ public class ActionCommand extends AbstractCommand {
 	@Override
 	public Command parse(String[] commandWords) {
 		Command command = null;
-		
-		if(this.matchCommandName(commandWords[0]) && 1 < commandWords.length) {
-			this.parseActions(commandWords);
-			command = new ActionCommand(actionList);
+		if(1 < commandWords.length && this.matchCommandName(commandWords[0])) {
 			this.actionList.clear();
+			this.parseActions(commandWords);
+			command = new ActionCommand(this.actionList);
 		}
 	return command;
 	}
