@@ -26,4 +26,12 @@ public class ExitDoor extends GameObject {
 	public String toString() {
 	return "EXITDOOR: " + this.position.toString() + " NOT SOLID";
 	}
+	
+	public  boolean interactWith(GameItem item) {
+		boolean interaction = item.isInPosition(this.position);
+		if(interaction) {
+			item.receiveInteraction(this);
+		}
+		return interaction;
+	}
 }

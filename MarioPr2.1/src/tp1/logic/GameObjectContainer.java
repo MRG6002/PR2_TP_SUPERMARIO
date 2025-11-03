@@ -8,12 +8,33 @@ import java.util.List;
 import tp1.logic.gameobjects.Land;
 import tp1.logic.gameobjects.Goomba;
 import tp1.logic.gameobjects.ExitDoor;
+import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Mario;
 
 import tp1.view.Messages;
 
 public class GameObjectContainer {
-	private List<Land> landList;
+	private List<GameObject> objects;
+	
+	public GameObjectContainer() {objects = new ArrayList<>();}
+	
+	public void add(GameObject object) {objects.add(object);}
+	
+	public void update() {
+		for (GameObject object : objects) {
+			object.update();
+			this.doInteractionsFrom(object);
+		}
+		removeDead();
+	}
+	
+	private void doInteractionsFrom(GameObject object) {
+		for(GameObject o: this.objects) {
+			o.interactWith(object);
+			object.interactWith(o);
+		}
+	}
+	/*private List<Land> landList;
 	private List<Goomba> goombaList;
 	private ExitDoor exitDoor;
 	private Mario mario;
@@ -37,12 +58,12 @@ public class GameObjectContainer {
 	
 	public void add(Mario mario) {
 		this.mario = mario;
-	}
+	}*/
 	
-	private void deleteDead() {
-		List<Goomba> aux = new ArrayList<>();
-		for(Goomba g: this.goombaList) if(g.isAlive()) aux.add(g);
-		this.goombaList = aux;
+	private void removeDead() {
+		List<GameObject> aux = new ArrayList<>();
+		for(GameObject o: this.objects) if(o.isAlive()) aux.add(o);
+		this.objects = aux;
 	}
 	
 	public boolean isSolid(Position position) {
@@ -52,13 +73,13 @@ public class GameObjectContainer {
 	return false;
 	}
 	
-	public void update() {
+	/*public void update() {
 		this.mario.update();
 		this.mario.interactWith(this.exitDoor);	
 		for(Goomba goomba: goombaList) goomba.update();
 		this.doInteractionsFrom(this.mario);
 		this.deleteDead();
-	}
+	}*/
 	
 	public void doInteractionsFrom(Mario mario) {
 		for(Goomba goomba: this.goombaList) mario.interactWith(goomba);

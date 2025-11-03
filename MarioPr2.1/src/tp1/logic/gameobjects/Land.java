@@ -29,4 +29,6 @@ public class Land extends GameObject {
 	public String toString() {
 	return "LAND: " + this.position.toString() + " SOLID";
 	}
+	
+	public  boolean interactWith(GameItem item) {return false;}
 }

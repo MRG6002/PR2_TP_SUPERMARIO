@@ -87,7 +87,17 @@ public class Mario extends MovingObject {
 		this.actionList.addLast(action);
 	}
 	
-	public boolean interactWith(ExitDoor exitDoor) {
+	//falta que a Mario le afecten las interacciones
+	//posible llamada desde door o goomba
+	public  boolean interactWith(GameItem item) {
+		boolean interaction = item.isInPosition(this.position);
+		if(interaction) {
+			item.receiveInteraction(this);
+		}
+		return interaction;
+	}
+	
+	/*public boolean interactWith(ExitDoor exitDoor) {
 		boolean interaction = false;
 		
 		if(exitDoor.isInPosition(this.position)) {
@@ -112,7 +122,7 @@ public class Mario extends MovingObject {
 			}
 		}
 	return interaction;
-	}
+	}*/
 	
 	public int count(Action action) {
 		int n = 0;

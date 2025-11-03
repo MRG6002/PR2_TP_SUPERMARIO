@@ -29,4 +29,13 @@ public class Goomba extends MovingObject {
 		this.game.addPoints();
 	return true;
 	}
+	
+	//desde aqui mario recibe la interaccion con goomba
+	public  boolean interactWith(GameItem item) {
+		boolean interaction = item.isInPosition(this.position);
+		if(interaction) {
+			item.receiveInteraction(this);
+		}
+		return interaction;
+	}
 }
