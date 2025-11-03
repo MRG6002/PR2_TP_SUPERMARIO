@@ -35,7 +35,7 @@ public class ResetCommand extends AbstractCommand {
 			game.reset(level);
 			view.showGame();
 		}
-		else view.showError(Messages.LINE.formatted(Messages.INVALID_LEVEL_NUMBER));
+		else view.showError(Messages.INVALID_LEVEL_NUMBER);
 	}
 
 	@Override
