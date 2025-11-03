@@ -14,35 +14,7 @@ public class ActionList implements Iterable<Action> {
 	public ActionList() {
 		this.actionList = new ArrayList<>();
 	}
-	
-	public boolean parse(String[] commandWords) {
-		int i = 1; // commandWords[0] == action
-		Action action = null;
-		
-		while(i < commandWords.length && Action.parseAction(commandWords[i]) != null) {
-			action = Action.parseAction(commandWords[i]);
-			if(action.isAction(Action.STOP) || (this.count(action) < 4 && !this.isOpposite(action))) this.actionList.addLast(action);
-			i++;
-		}
-	return i == commandWords.length;
-	}
 
-	private int count(Action action) {
-		int n = 0;
-		
-		for(Action aux: this.actionList) {
-			if(aux.isAction(action)) n++;
-		}
-	return n;
-	}
-	
-	private boolean isOpposite(Action action) {
-		for(Action aux: this.actionList) {
-			if(aux.isAction(Action.opposite(action))) return true;
-		}
-	return false;
-	}
-	
 	@Override
 	public Iterator<Action> iterator() {
 	return this.actionList.iterator();

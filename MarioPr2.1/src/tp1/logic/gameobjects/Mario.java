@@ -118,4 +118,15 @@ public class Mario extends MovingObject {
 		}
 	return interaction;
 	}
+	
+	public int count(Action action) {
+		int n = 0;
+		for(Action aux: this.actionList) if(aux.isAction(action)) n++;
+	return n;
+	}
+	
+	public boolean isOpposite(Action action) {
+		for(Action aux: this.actionList) if(aux.isAction(Action.opposite(action))) return true;
+	return false;
+	}
 }

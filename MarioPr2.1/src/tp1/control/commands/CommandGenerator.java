@@ -9,7 +9,7 @@ import tp1.view.Messages;
 
 public class CommandGenerator {
 	private static final List<Command> availableCommands = Arrays.asList(
-		new ActionCommand(),
+		new ActionCommand(null),
 		new UpdateCommand(),
 		new ResetCommand(),
 		new HelpCommand(),

@@ -2,8 +2,10 @@
 
 package tp1.control.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tp1.logic.Action;
-import tp1.logic.ActionList;
 import tp1.logic.GameModel;
 
 import tp1.view.GameView;
@@ -14,18 +16,13 @@ public class ActionCommand extends AbstractCommand {
 	private static final String SHORTCUT = Messages.COMMAND_ACTION_SHORTCUT;
 	private static final String DETAILS = Messages.COMMAND_ACTION_DETAILS;
 	private static final String HELP = Messages.COMMAND_ACTION_HELP;
-	
-	private ActionList actionList;
+	private List<Action> actionList;
+	//private ActionList actionList;
 
-	public ActionCommand() {
+	public ActionCommand(List<Action> actionList) {
 		super(NAME, SHORTCUT, DETAILS, HELP);
-		this.actionList = new ActionList();
-	}
-	
-	public ActionCommand(ActionList actionList) {
-		super(NAME, SHORTCUT, DETAILS, HELP);
-		this.actionList = new ActionList();
-		for(Action action: actionList) this.actionList.addLast(action);
+		this.actionList = new ArrayList<>();
+		if(actionList != null) for(Action action: actionList) this.actionList.addLast(action);
 	}
 
 	@Override
@@ -42,12 +39,18 @@ public class ActionCommand extends AbstractCommand {
 		Command command = null;
 		
 		if(this.matchCommandName(commandWords[0]) && 1 < commandWords.length) {
-			if(this.actionList.parse(commandWords)) {
-				command = new ActionCommand(actionList);
-				this.actionList.clear();
-			}
-			else command = new ActionCommand();
+			this.parseActions(commandWords);
+			command = new ActionCommand(actionList);
+			this.actionList.clear();
 		}
 	return command;
+	}
+	
+	private void parseActions(String[] commandWords) {
+		Action action = null;
+		for(String s: commandWords) {
+			action = Action.parseAction(s);
+			this.actionList.addLast(action);
+		}
 	}
 }

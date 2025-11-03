@@ -31,7 +31,6 @@ public enum Action {
 	
 	public static Action parseAction(String commandWord) {
 		Action action = null;
-		
 		if(commandWord.equalsIgnoreCase("l") || commandWord.equalsIgnoreCase("left")) action = Action.LEFT;
 		else if(commandWord.equalsIgnoreCase("r") || commandWord.equalsIgnoreCase("right")) action = Action.RIGHT;
 		else if(commandWord.equalsIgnoreCase("d") || commandWord.equalsIgnoreCase("down")) action = Action.DOWN;

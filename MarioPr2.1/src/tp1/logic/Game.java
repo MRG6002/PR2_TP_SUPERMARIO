@@ -33,8 +33,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	public String positionToString(int col, int row) {
 		Position position = new Position(row, col);
-		
-	return this.gameObjectContainer.postitionToString(position);
+		return this.gameObjectContainer.postitionToString(position);
 	}
 
 	public boolean playerWins() {
@@ -94,7 +93,13 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	}
 	
 	public void addAction(Action action) {
-		this.mario.addAction(action);
+		this.restrictions(action);
+	}
+	
+	private void restrictions(Action action) {
+		if(action != null) {
+			if(action.isAction(Action.STOP) || (this.mario.count(action) < 4 && !this.mario.isOpposite(action))) this.mario.addAction(action);
+		}
 	}
 	
 	public void marioExited() {
