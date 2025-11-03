@@ -104,16 +104,17 @@ public class Mario extends MovingObject {
 	
 	public boolean interactWith(Goomba goomba) {
 		boolean interaction = false;
-		
-		if(goomba.isInPosition(this.position) || (this.big && goomba.isInPosition(this.position.go(Action.UP)))) {
-			interaction = true;
-			if(this.big) {
-				if(!super.isFalling()) this.big = false;
+		if(goomba.isAlive()) {
+			if(goomba.isInPosition(this.position) || (this.big && goomba.isInPosition(this.position.go(Action.UP)))) {
+				interaction = true;
+				if(this.big) {
+					if(!super.isFalling()) this.big = false;
+				}
+				else {
+					if(!super.isFalling()) this.game.marioDead();
+				}
+				goomba.receiveInteraction(this);
 			}
-			else {
-				if(!super.isFalling()) this.game.marioDead();
-			}
-			goomba.receiveInteraction(this);
 		}
 	return interaction;
 	}

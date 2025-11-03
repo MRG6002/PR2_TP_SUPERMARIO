@@ -39,6 +39,12 @@ public class GameObjectContainer {
 		this.mario = mario;
 	}
 	
+	private void deleteDead() {
+		List<Goomba> aux = new ArrayList<>();
+		for(Goomba g: this.goombaList) if(g.isAlive()) aux.add(g);
+		this.goombaList = aux;
+	}
+	
 	public boolean isSolid(Position position) {
 		for(Land land: landList) {
 			if(land.isInPosition(position)) return true;
@@ -48,11 +54,10 @@ public class GameObjectContainer {
 	
 	public void update() {
 		this.mario.update();
-		this.mario.interactWith(this.exitDoor);
-		goombaList.removeIf(goomba -> !goomba.isAlive());	
+		this.mario.interactWith(this.exitDoor);	
 		for(Goomba goomba: goombaList) goomba.update();
 		this.doInteractionsFrom(this.mario);
-		goombaList.removeIf(goomba -> !goomba.isAlive());	
+		this.deleteDead();
 	}
 	
 	public void doInteractionsFrom(Mario mario) {
