@@ -10,7 +10,7 @@ import tp1.view.Messages;
 public class ExitDoor extends GameObject {
 
 	public ExitDoor(Position position, GameWorld game) {
-		super(position, game);
+		super(position, game, "exitdoor", "ed");
 	}
 	
 	@Override

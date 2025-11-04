@@ -10,7 +10,7 @@ import tp1.view.Messages;
 public class Land extends GameObject {
 	
 	public Land(Position position, GameWorld game) {
-		super(position, game);
+		super(position, game, "land", "l");
 	}
 	
 	@Override
@@ -31,4 +31,6 @@ public class Land extends GameObject {
 	}
 	
 	public  boolean interactWith(GameItem item) {return false;}
+	
+	
 }

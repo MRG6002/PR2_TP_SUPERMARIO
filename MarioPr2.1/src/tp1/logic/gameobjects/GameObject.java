@@ -2,6 +2,7 @@
 
 package tp1.logic.gameobjects;
 
+import tp1.control.commands.Command;
 import tp1.logic.Action;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
@@ -10,11 +11,15 @@ public abstract class GameObject implements GameItem{
 	protected Position position; // If you can, make it private
 	protected GameWorld game; 
 	private boolean isAlive;
+	private String name;
+	private String shortcut;
 	
-	public GameObject(Position position, GameWorld game) {
+	public GameObject(Position position, GameWorld game, String name, String shortcut) {
 		this.position = position;
 		this.game = game;
 		this.isAlive = true;
+		this.name = name;
+		this.shortcut = shortcut;
 	}
 	
 	public boolean isInPosition(Position position) {
@@ -32,6 +37,26 @@ public abstract class GameObject implements GameItem{
 	// Not mandatory but recommended
 	protected void move(Action direction) {
 		this.position = this.position.go(direction);
+	}
+	
+	protected String getName() {
+	return name;
+	}
+		
+	protected String getShortcut() {
+	return shortcut; 
+	}
+	
+	protected boolean matchCommandName(String name) {
+	return getShortcut().equalsIgnoreCase(name) || getName().equalsIgnoreCase(name);
+	}
+	
+	//debo hacer que devuelva una copia
+	public GameObject parse(String objWords[]) {
+		GameObject object = null;
+		
+		if(objWords.length == 2 && matchCommandName(objWords[1])) object = this.;
+	return command;
 	}
 	
 	public boolean isSolid() {return false;}

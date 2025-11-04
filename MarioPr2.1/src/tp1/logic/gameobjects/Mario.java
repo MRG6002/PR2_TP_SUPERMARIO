@@ -14,7 +14,7 @@ public class Mario extends MovingObject {
 	private ActionList actionList;
 
 	public Mario(Position position, GameWorld game) {
-		super(position, game, Action.RIGHT);
+		super(position, game, Action.RIGHT, "mario", "m");
 		this.big = true;
 		this.actionList = new ActionList();
 	}

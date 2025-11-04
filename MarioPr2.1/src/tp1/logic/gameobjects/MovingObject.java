@@ -12,8 +12,8 @@ public abstract class MovingObject extends GameObject {
 	private Action direction;
 	private boolean isFalling;
 	
-	public MovingObject(Position position, GameWorld game, Action direction) {
-		super(position, game);
+	public MovingObject(Position position, GameWorld game, Action direction, String name, String shortcut) {
+		super(position, game, name, shortcut);
 		this.direction = direction;
 		this.isFalling = false;
 	}

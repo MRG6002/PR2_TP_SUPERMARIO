@@ -11,7 +11,7 @@ import tp1.view.Messages;
 public class Goomba extends MovingObject {
 	
 	public Goomba(Position position, GameWorld game) {
-		super(position, game, Action.LEFT);
+		super(position, game, Action.LEFT, "goomba", "g");
 	}
 
 	@Override
