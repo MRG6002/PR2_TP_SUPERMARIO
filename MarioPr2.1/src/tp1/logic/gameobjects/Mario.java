@@ -75,7 +75,7 @@ public class Mario extends MovingObject {
 			else if (action == Action.STOP){
 				super.stop();
 			}
-			else { // action.isAction(Action.LEFT) || action.isAction(Action.RIGHT)
+			else {
 				super.doAction(action);
 				this.game.doInteractionsFrom(this);
 			}
@@ -106,47 +106,18 @@ public class Mario extends MovingObject {
 	@Override
 	public  boolean receiveInteraction(Goomba obj) {
 		boolean interaction = false;
-		//if(obj.isAlive()) {
-			if(obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)))) {
-				interaction = true;
-				if(this.big) {
-					if(!super.isFalling()) this.big = false;
-				}
-				else {
-					if(!super.isFalling()) this.game.marioDead();
-				}
-				this.game.addPoints();
-			}
-		//}
-	return interaction;
-	}
-	
-	/*public boolean interactWith(ExitDoor exitDoor) {
-		boolean interaction = false;
-		
-		if(exitDoor.isInPosition(this.position)) {
+		if(obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)))) {
 			interaction = true;
-			this.game.marioExited();
+			if(this.big) {
+				if(!super.isFalling()) this.big = false;
+			}
+			else {
+				if(!super.isFalling()) this.game.marioDead();
+			}
+			this.game.addPoints();
 		}
 	return interaction;
 	}
-	
-	public boolean interactWith(Goomba goomba) {
-		boolean interaction = false;
-		if(goomba.isAlive()) {
-			if(goomba.isInPosition(this.position) || (this.big && goomba.isInPosition(this.position.go(Action.UP)))) {
-				interaction = true;
-				if(this.big) {
-					if(!super.isFalling()) this.big = false;
-				}
-				else {
-					if(!super.isFalling()) this.game.marioDead();
-				}
-				goomba.receiveInteraction(this);
-			}
-		}
-	return interaction;
-	}*/
 	
 	public int count(Action action) {
 		int n = 0;

@@ -23,13 +23,6 @@ public class Goomba extends MovingObject {
 	public String toString() {
 	return "GOOMBA: " + super.toString() + " NOT SOLID";
 	}
-	
-	/*public boolean receiveInteraction(Mario mario) {
-		super.dead();
-		this.game.addPoints();
-	return true;
-	}*/
-	
 
 	public  boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position);
