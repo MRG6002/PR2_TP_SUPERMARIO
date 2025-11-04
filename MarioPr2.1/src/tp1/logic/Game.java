@@ -177,5 +177,6 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		gameObjectContainer.add(new Goomba(new Position(10, 10), this));
 		gameObjectContainer.add(new Goomba(new Position(12, 11), this));
 		gameObjectContainer.add(new Goomba(new Position(12, 14), this));
+		//gameObjectContainer.add(new Goomba(new Position(9, 0), this));
 	}
 }

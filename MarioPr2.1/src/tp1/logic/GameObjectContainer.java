@@ -38,8 +38,10 @@ public class GameObjectContainer {
 	public void doInteractionsFrom(GameObject object) {
 		if(object.isAlive()) {
 			for(GameObject o: this.objects) {
-				o.interactWith(object);
-				object.interactWith(o);
+				if(o.isAlive()) {
+					o.interactWith(object);
+					object.interactWith(o);
+				}
 			}
 		}
 	}

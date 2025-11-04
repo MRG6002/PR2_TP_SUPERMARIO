@@ -89,7 +89,7 @@ public class Mario extends MovingObject {
 	
 
 	public  boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position);
+		boolean interaction = item.isInPosition(this.position) || (this.big && item.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
 			item.receiveInteraction(this);
 		}
@@ -102,12 +102,11 @@ public class Mario extends MovingObject {
 	return true;
 	}
 	
-	//la comprobacion de inPosition no debe hacerse aqui
-	//si no lo esta, no se llama a la funcion
+	
 	@Override
 	public  boolean receiveInteraction(Goomba obj) {
 		boolean interaction = false;
-		if(obj.isAlive()) {
+		//if(obj.isAlive()) {
 			if(obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)))) {
 				interaction = true;
 				if(this.big) {
@@ -118,7 +117,7 @@ public class Mario extends MovingObject {
 				}
 				this.game.addPoints();
 			}
-		}
+		//}
 	return interaction;
 	}
 	

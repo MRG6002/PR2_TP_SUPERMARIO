@@ -30,8 +30,7 @@ public class Goomba extends MovingObject {
 	return true;
 	}*/
 	
-	//goomba solo interactua con Mario
-	//debemos hacer comprobacion de las dos pos de mario
+
 	public  boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position);
 		if(interaction) {
