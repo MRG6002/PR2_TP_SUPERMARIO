@@ -70,14 +70,14 @@ public class Mario extends MovingObject {
 			}
 			else if(action == Action.UP) {
 				super.up(big);
-				//this.game.doInteractionsFrom(this);
+				this.game.doInteractionsFrom(this);
 			}
 			else if (action == Action.STOP){
 				super.stop();
 			}
 			else { // action.isAction(Action.LEFT) || action.isAction(Action.RIGHT)
 				super.doAction(action);
-				//this.game.doInteractionsFrom(this);
+				this.game.doInteractionsFrom(this);
 			}
 		}
 		this.actionList.clear();
@@ -89,7 +89,7 @@ public class Mario extends MovingObject {
 	
 
 	public  boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position) || (this.big && item.isInPosition(this.position.go(Action.UP)));
+		boolean interaction = item.isInPosition(this.position) || (item.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
 			item.receiveInteraction(this);
 		}
