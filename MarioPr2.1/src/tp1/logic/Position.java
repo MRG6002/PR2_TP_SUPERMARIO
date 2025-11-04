@@ -2,6 +2,7 @@
 
 package tp1.logic;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import tp1.view.Messages;
@@ -41,5 +42,10 @@ public class Position {
 	@Override
 	public String toString() {
 	return Messages.POSITION.formatted(this.row, this.col);		
+	}
+
+	public static Position stringToPosition(String string) {
+		//Integer.parseInt(String.valueOf(1));
+		return new Position(Integer.intestring[1], string[3]);
 	}
 }

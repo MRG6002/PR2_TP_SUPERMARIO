@@ -52,11 +52,14 @@ public abstract class GameObject implements GameItem{
 	}
 	
 	//debo hacer que devuelva una copia
-	public GameObject parse(String objWords[]) {
+	public GameObject parse(String objWords[], GameWorld game) {
 		GameObject object = null;
 		
-		if(objWords.length == 2 && matchCommandName(objWords[1])) object = this.;
-	return command;
+		if(objWords.length == 2 && matchCommandName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			object = this.newCopy();
+		}
+	return object;
 	}
 	
 	public boolean isSolid() {return false;}

@@ -34,4 +34,8 @@ public class ExitDoor extends GameObject {
 		}
 		return interaction;
 	}
+	
+	public ExitDoor newCopy() {
+		return new ExitDoor()
+	}
 }
