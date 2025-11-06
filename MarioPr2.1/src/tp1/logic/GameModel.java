@@ -2,6 +2,8 @@
 
 package tp1.logic;
 
+import tp1.logic.gameobjects.GameObject;
+
 public interface GameModel {
 
 	public boolean isFinished();
@@ -10,4 +12,6 @@ public interface GameModel {
 	public void exit();
 	public void reset();
 	public boolean reset(int level);
+	public void addObject(GameObject obj);
+	public GameWorld getGameWorld();
 }

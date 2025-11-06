@@ -9,10 +9,15 @@ import tp1.view.Messages;
 
 public class Land extends GameObject {
 	
+	
 	public Land(Position position, GameWorld game) {
 		super(position, game, "land", "l");
 	}
 	
+	Land() {
+		super(null, null, "land", "l");
+	}
+
 	@Override
 	public boolean isSolid() {return true; }
 	
@@ -31,6 +36,20 @@ public class Land extends GameObject {
 	}
 	
 	public  boolean interactWith(GameItem item) {return false;}
+	
+	/*public Land parse(String objWords[], GameWorld game) {
+		Land land = null;
+		if(objWords.length == 2 && matchObjectName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			land = new Land(pos, game);
+		}
+	return land;
+	}*/
+	
+	@Override
+	public GameObject newCopy(Position pos, GameWorld game){
+		return new Land(pos, game);
+	}
 	
 	
 }

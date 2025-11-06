@@ -28,12 +28,13 @@ public class GameObjectContainer {
 		removeDead();
 	}
 	
+	//los booleanos de interactWith los usamos si mario ha perdido vida en la interaccion
+	//por ello, toda interaccion que no pueda matar a mario, dara false
 	public void doInteractionsFrom(GameObject object) {
 		if(object.isAlive()) {
-			for(GameObject o: this.objects) {
+			for(GameObject o: this.objects) { 
 				if(o.isAlive()) {
-					o.interactWith(object);
-					object.interactWith(o);
+					if(o.interactWith(object) || object.interactWith(o)) return;
 				}
 			}
 		}

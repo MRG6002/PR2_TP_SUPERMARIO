@@ -3,6 +3,7 @@
 package tp1.control.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import tp1.logic.Action;
@@ -24,10 +25,17 @@ public class ActionCommand extends AbstractCommand {
 		if(actionList != null) this.actionList = actionList;
 	}
 
+	ActionCommand() {
+		super(NAME, SHORTCUT, DETAILS, HELP);
+		this.actionList = new ArrayList<>();
+	}
+
 	@Override
 	public void execute(GameModel game, GameView view) {
 		if(0 < this.actionList.size()) {
-			for(Action action: this.actionList) game.addAction(action);
+			for(Action action: this.actionList) {
+				game.addAction(action);
+			}
 		}
 		game.update();
 		view.showGame();
@@ -38,7 +46,7 @@ public class ActionCommand extends AbstractCommand {
 		Command command = null;
 		if(1 < commandWords.length && this.matchCommandName(commandWords[0])) {
 			this.actionList.clear();
-			this.parseActions(commandWords);
+			this.parseActions(Arrays.copyOfRange(commandWords, 1, commandWords.length));
 			command = new ActionCommand(this.actionList);
 		}
 	return command;

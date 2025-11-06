@@ -2,7 +2,6 @@
 
 package tp1.logic;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import tp1.view.Messages;
@@ -43,9 +42,21 @@ public class Position {
 	public String toString() {
 	return Messages.POSITION.formatted(this.row, this.col);		
 	}
-
+	
+	//posible excepcion si introduce un num no valido el usuario
+	//se soluciona haciendo invisible la pos, ya que en (-1, -1)
+	//no se vera el objeto creado
 	public static Position stringToPosition(String string) {
-		//Integer.parseInt(String.valueOf(1));
-		return new Position(Integer.intestring[1], string[3]);
+		Position pos = null;
+		String aux = string.substring(1, string.length() - 1);
+		String[] posiciones = aux.split(",");
+		int posx = Integer.parseInt(posiciones[0]);
+		int posy = Integer.parseInt(posiciones[1]);
+		if(Position.validPosition(posx, posy)) pos = new Position(posx, posy);
+		return pos;
+	}
+
+	private static boolean validPosition(int posx, int posy) {
+		return (posx >= 0 && posx < Game.DIM_X && posy >= 0 && posy < Game.DIM_Y);
 	}
 }

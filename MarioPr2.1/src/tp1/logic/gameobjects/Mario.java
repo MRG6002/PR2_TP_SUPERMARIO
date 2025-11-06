@@ -19,6 +19,22 @@ public class Mario extends MovingObject {
 		this.actionList = new ActionList();
 	}
 	
+	private Mario(Position position, GameWorld game, Action dir) {
+		super(position, game, dir, "mario", "m");
+		this.big = true;
+		this.actionList = new ActionList();
+	}
+	
+	private Mario(Position position, GameWorld game, Action dir, boolean big) {
+		super(position, game, dir, "mario", "m");
+		this.big = big;
+		this.actionList = new ActionList();
+	}
+	
+	Mario() {
+		super(null, null, Action.RIGHT, "mario", "m");
+	}
+
 	@Override
 	public boolean isInPosition(Position position) {
 	return super.isInPosition(position) || (this.big && (this.position.go(Action.UP).equals(position)));
@@ -89,11 +105,10 @@ public class Mario extends MovingObject {
 	
 
 	public  boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position) || (item.isInPosition(this.position.go(Action.UP)));
-		if(interaction) {
+		if(item.isInPosition(this.position) || (item.isInPosition(this.position.go(Action.UP)))) {
 			item.receiveInteraction(this);
 		}
-		return interaction;
+		return false;
 	}
 	
 	@Override
@@ -116,17 +131,45 @@ public class Mario extends MovingObject {
 			}
 			this.game.addPoints();
 		}
-	return interaction;
+	return interaction && !this.big && !super.isFalling();
 	}
 	
 	public int count(Action action) {
 		int n = 0;
-		for(Action aux: this.actionList) if(aux == action) n++;
+		for(Action aux: this.actionList) {
+			if(aux == action) n++;
+		}
 	return n;
 	}
 	
 	public boolean isOpposite(Action action) {
 		for(Action aux: this.actionList) if(aux == Action.opposite(action)) return true;
 	return false;
+	}
+	
+	//game tiene referencia a mario. Pasarle los marios??
+	//game ahora tiene un array de marios??
+	@Override
+	public Mario parse(String objWords[], GameWorld game) {
+		Mario mario = null;	
+		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			if(pos != null) {
+				if(objWords.length == 2) mario = new Mario(pos, game);
+				else if(objWords.length >= 3) {
+					Action dir = Action.parseAction(objWords[2]);
+					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
+					if(correctDir && objWords.length == 3) {
+						mario = new Mario(pos, game, Action.parseAction(objWords[2]));
+					}
+					else if(correctDir && objWords.length == 4) {
+						boolean big = objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b");
+						mario = new Mario(pos, game, Action.parseAction(objWords[2]), big);
+					}
+				}
+			}
+			if(mario != null) game.conectMario(mario);
+		}
+	return mario;
 	}
 }

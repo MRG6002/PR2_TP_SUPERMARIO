@@ -5,6 +5,7 @@ package tp1.logic;
 import tp1.logic.gameobjects.Land;
 import tp1.logic.gameobjects.Goomba;
 import tp1.logic.gameobjects.ExitDoor;
+import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Mario;
 
 import tp1.view.Messages;
@@ -24,7 +25,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 
 	public Game(int nLevel) {
 		if(nLevel == 0) this.initLevel0();
-		else this.initLevel1(); // nLevel == 1
+		else if(nLevel == 1) this.initLevel1(); // nLevel == 1
+		else this.initLevelMinus1();
 		this.points = 0;
 		this.lives = 3;
 		this.exit = false;
@@ -61,6 +63,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		boolean levelExists = true;
 		if (level == 0) this.initLevel0();
 		else if(level == 1) this.initLevel1(); // level == 1
+		else if(level == -1) this.initLevelMinus1();
 		else levelExists = false;
 		return levelExists;
 	}
@@ -115,6 +118,10 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	public void doInteractionsFrom(Mario mario) {
 		this.gameObjectContainer.doInteractionsFrom(mario);
 	}
+	
+	public void addObject(GameObject obj) {
+		this.gameObjectContainer.add(obj);
+	}
 
 	@Override
 	public String toString() {
@@ -127,6 +134,13 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		else stringBuilder.append(Messages.LINE.formatted(" NO VICTORY YET"));
 		stringBuilder.append(this.gameObjectContainer.toString());
 	return stringBuilder.toString();
+	}
+	
+	private void initLevelMinus1() {
+		this.time = 100;
+		this.level = -1;
+		this.lives = 3;
+		gameObjectContainer = new GameObjectContainer();
 	}
 	
 	private void initLevel0() {
@@ -177,5 +191,16 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		gameObjectContainer.add(new Goomba(new Position(10, 10), this));
 		gameObjectContainer.add(new Goomba(new Position(12, 11), this));
 		gameObjectContainer.add(new Goomba(new Position(12, 14), this));
+	}
+	
+	//Funciones necesarias para generador de objetos
+	@Override
+	public GameWorld getGameWorld() {
+		return this;
+	}
+
+	@Override
+	public void conectMario(Mario mario) {
+		this.mario = mario;
 	}
 }

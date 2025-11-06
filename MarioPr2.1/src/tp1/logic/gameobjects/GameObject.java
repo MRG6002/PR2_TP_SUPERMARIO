@@ -2,7 +2,6 @@
 
 package tp1.logic.gameobjects;
 
-import tp1.control.commands.Command;
 import tp1.logic.Action;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
@@ -47,19 +46,8 @@ public abstract class GameObject implements GameItem{
 	return shortcut; 
 	}
 	
-	protected boolean matchCommandName(String name) {
+	protected boolean matchObjectName(String name) {
 	return getShortcut().equalsIgnoreCase(name) || getName().equalsIgnoreCase(name);
-	}
-	
-	//debo hacer que devuelva una copia
-	public GameObject parse(String objWords[], GameWorld game) {
-		GameObject object = null;
-		
-		if(objWords.length == 2 && matchCommandName(objWords[1])) {
-			Position pos = Position.stringToPosition(objWords[0]);
-			object = this.newCopy();
-		}
-	return object;
 	}
 	
 	public boolean isSolid() {return false;}
@@ -72,4 +60,18 @@ public abstract class GameObject implements GameItem{
 	public  boolean receiveInteraction(ExitDoor obj) {return false;}
 	public  boolean receiveInteraction(Mario obj) {return false;}
 	public  boolean receiveInteraction(Goomba obj) {return false;}
+
+	//protected abstract GameObject parse(String[] objWords, GameWorld game);
+	public GameObject parse(String objWords[], GameWorld game) {
+		GameObject obj = null;
+		if(objWords.length == 2 && matchObjectName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			if(pos != null) obj = this.newCopy(pos, game);
+		}
+	return obj;
+	}
+
+	public GameObject newCopy(Position pos, GameWorld game) {
+		return null;
+	}
 }

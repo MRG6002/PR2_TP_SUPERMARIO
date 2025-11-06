@@ -13,6 +13,10 @@ public class ExitDoor extends GameObject {
 		super(position, game, "exitdoor", "ed");
 	}
 	
+	ExitDoor() {
+		super(null, null, "exitdoor", "ed");
+	}
+
 	@Override
 	public void update() {
 	}
@@ -28,14 +32,24 @@ public class ExitDoor extends GameObject {
 	}
 	
 	public boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position);
-		if(interaction) {
+		if(item.isInPosition(this.position)) {
 			item.receiveInteraction(this);
 		}
-		return interaction;
+		return false;
 	}
 	
-	public ExitDoor newCopy() {
-		return new ExitDoor()
+
+	/*public ExitDoor parse(String objWords[], GameWorld game) {
+		ExitDoor door = null;
+		if(objWords.length == 2 && matchObjectName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			door = new ExitDoor(pos, game);
+		}
+	return door;
+	}*/
+	
+	@Override
+	public GameObject newCopy(Position pos, GameWorld game){
+		return new ExitDoor(pos, game);
 	}
 }
