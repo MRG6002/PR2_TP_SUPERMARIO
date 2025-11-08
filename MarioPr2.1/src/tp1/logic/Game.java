@@ -7,7 +7,7 @@ import tp1.logic.gameobjects.Goomba;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Mario;
-
+import tp1.logic.gameobjects.Mushroom;
 import tp1.view.Messages;
 
 public class Game implements GameModel, GameStatus, GameWorld {
@@ -111,8 +111,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.victory = true;
 	}
 	
-	public void addPoints() {
-		this.points += 100;
+	public void addPoints(int num) {
+		this.points += num;
 	}
 	 
 	public void doInteractionsFrom(Mario mario) {
@@ -121,6 +121,11 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	public void addObject(GameObject obj) {
 		this.gameObjectContainer.add(obj);
+	}
+	
+	@Override
+	public void addDelayed(GameObject obj) {
+		this.gameObjectContainer.addDelayed(obj);
 	}
 
 	@Override

@@ -116,6 +116,15 @@ public class Mario extends MovingObject {
 	return true;
 	}
 	
+	@Override
+	public  boolean receiveInteraction(Mushroom obj) {
+		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
+		if(interaction) {
+			this.big = true;
+			this.game.addPoints(50);
+		}
+	return interaction;
+	}
 	
 	@Override
 	public  boolean receiveInteraction(Goomba obj) {
@@ -130,7 +139,7 @@ public class Mario extends MovingObject {
 					this.game.marioDead();
 				}
 			}
-			this.game.addPoints();
+			this.game.addPoints(100);
 		}
 	return interaction;
 	}

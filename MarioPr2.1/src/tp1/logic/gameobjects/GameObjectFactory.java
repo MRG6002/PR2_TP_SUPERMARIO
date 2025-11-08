@@ -10,7 +10,8 @@ public class GameObjectFactory {
 			new Land(),
 			new ExitDoor(),
 			new Goomba(),
-			new Mario()
+			new Mario(),
+			new Mushroom()
 		);
 	
 	//debemos comprobar que no se crean objetos en posiciones imposibles.

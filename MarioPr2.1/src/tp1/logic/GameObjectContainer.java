@@ -10,14 +10,29 @@ import tp1.view.Messages;
 
 public class GameObjectContainer {
 	private List<GameObject> objects;
+	private List<GameObject> delayedObjects;
 	private List<GameObject> lands;
 	
-	public GameObjectContainer() {objects = new ArrayList<>();
-	lands = new ArrayList<>();}
+	public GameObjectContainer() {
+		objects = new ArrayList<>();
+		delayedObjects = new ArrayList<>();
+		lands = new ArrayList<>();
+	}
 	
 	public void add(GameObject object) {
 		if(object.getIcon() == Messages.LAND) lands.add(object);
 		else objects.add(object);}
+	
+	public void addDelayed(GameObject object) {
+		delayedObjects.add(object);
+	}
+	
+	private void joinLists() {
+		for(GameObject o: delayedObjects) {
+			objects.add(o);
+		}
+		delayedObjects.clear();
+	}
 	
 	public void update() {
 		for (GameObject object : objects) {
@@ -25,6 +40,7 @@ public class GameObjectContainer {
 			this.doInteractionsFrom(object);
 		}
 		removeDead();
+		joinLists();
 	}
 	
 	public void doInteractionsFrom(GameObject object) {

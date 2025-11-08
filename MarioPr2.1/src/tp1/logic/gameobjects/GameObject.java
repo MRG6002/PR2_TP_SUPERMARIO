@@ -50,18 +50,18 @@ public abstract class GameObject implements GameItem{
 	return getShortcut().equalsIgnoreCase(name) || getName().equalsIgnoreCase(name);
 	}
 	
-	public boolean isSolid() {return false;}
-	public abstract void update();
 	public abstract String getIcon();
 	public abstract String toString();
 	
-	
+	public void update() {};
+	public boolean isSolid() {return false;}
 	public  boolean receiveInteraction(Land obj) {return false;}
 	public  boolean receiveInteraction(ExitDoor obj) {return false;}
 	public  boolean receiveInteraction(Mario obj) {return false;}
 	public  boolean receiveInteraction(Goomba obj) {return false;}
+	public  boolean receiveInteraction(Mushroom obj) {return false;}
+	public  boolean receiveInteraction(Box obj) {return false;}
 
-	//protected abstract GameObject parse(String[] objWords, GameWorld game);
 	public GameObject parse(String objWords[], GameWorld game) {
 		GameObject obj = null;
 		if(objWords.length == 2 && matchObjectName(objWords[1])) {
