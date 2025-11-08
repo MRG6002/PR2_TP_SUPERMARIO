@@ -31,13 +31,11 @@ public class Goomba extends MovingObject {
 	public String toString() {
 	return "GOOMBA: " + super.toString() + " NOT SOLID";
 	}
-
+	
 	public  boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position), marioLoosesLife = false;
-		if(interaction) {
-			marioLoosesLife = item.receiveInteraction(this);
-		}
-		return interaction && marioLoosesLife;
+		boolean interaction = item.isInPosition(this.position);
+		if(interaction) {item.receiveInteraction(this);}
+		return interaction;
 	}
 	
 	@Override

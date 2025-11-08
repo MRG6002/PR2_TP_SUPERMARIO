@@ -47,8 +47,8 @@ public class Mario extends MovingObject {
 		this.playerMovement();
 		if(this.position.equals(position) && !super.isInDirection(Action.STOP)) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
 			super.update();
-			this.game.doInteractionsFrom(this);
-			if(!super.isAlive()) this.game.marioDead();
+			//this.game.doInteractionsFrom(this);
+			//if(!super.isAlive()) this.game.marioDead();
 		}
 	}
 	
@@ -105,10 +105,9 @@ public class Mario extends MovingObject {
 	
 
 	public  boolean interactWith(GameItem item) {
-		if(item.isInPosition(this.position) || (item.isInPosition(this.position.go(Action.UP)))) {
-			item.receiveInteraction(this);
-		}
-		return false;
+		boolean interaction = item.isInPosition(this.position) || (this.big && item.isInPosition(this.position.go(Action.UP)));
+		if(interaction) {item.receiveInteraction(this);}
+		return interaction;
 	}
 	
 	@Override
@@ -120,18 +119,20 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public  boolean receiveInteraction(Goomba obj) {
-		boolean interaction = false;
-		if(obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)))) {
-			interaction = true;
+		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
+		if(interaction) {
 			if(this.big) {
 				if(!super.isFalling()) this.big = false;
 			}
 			else {
-				if(!super.isFalling()) this.game.marioDead();
+				if(!super.isFalling()) {
+					this.dead();
+					this.game.marioDead();
+				}
 			}
 			this.game.addPoints();
 		}
-	return interaction && !this.big && !super.isFalling();
+	return interaction;
 	}
 	
 	public int count(Action action) {
@@ -163,8 +164,11 @@ public class Mario extends MovingObject {
 						mario = new Mario(pos, game, Action.parseAction(objWords[2]));
 					}
 					else if(correctDir && objWords.length == 4) {
-						boolean big = objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b");
-						mario = new Mario(pos, game, Action.parseAction(objWords[2]), big);
+						boolean big = true, error = false;
+						if (objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b")) big = true;
+						else if(objWords[3].equalsIgnoreCase("small") || objWords[3].equalsIgnoreCase("s")) big = false;
+						else error = true;
+						if(!error) mario = new Mario(pos, game, Action.parseAction(objWords[2]), big);
 					}
 				}
 			}

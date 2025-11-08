@@ -32,10 +32,11 @@ public class ExitDoor extends GameObject {
 	}
 	
 	public boolean interactWith(GameItem item) {
-		if(item.isInPosition(this.position)) {
+		boolean interaction = item.isInPosition(this.position);
+		if(interaction) {
 			item.receiveInteraction(this);
 		}
-		return false;
+		return interaction;
 	}
 	
 
