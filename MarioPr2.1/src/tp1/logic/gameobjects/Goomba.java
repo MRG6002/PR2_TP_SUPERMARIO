@@ -32,15 +32,12 @@ public class Goomba extends MovingObject {
 	return "GOOMBA: " + super.toString() + " NOT SOLID";
 	}
 	
-	public  boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position);
-		if(interaction) {item.receiveInteraction(this);}
-		return interaction;
-	}
+	public boolean interactWith(GameItem item) {return true;}
 	
 	@Override
 	public  boolean receiveInteraction(Mario obj) {
 		super.dead();
+		obj.receiveInteraction(this);
 	return false;
 	}
 	

@@ -48,6 +48,7 @@ public class Mario extends MovingObject {
 		this.playerMovement();
 		if(this.position.equals(position) && (!super.isInDirection(Action.STOP) || !this.game.isSolid(this.position.go(Action.DOWN)))) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
 			super.update();
+			if(!this.isAlive()) this.game.marioDead(); //por si mario se cae por precipicio al actualizar
 		}
 	}
 	
