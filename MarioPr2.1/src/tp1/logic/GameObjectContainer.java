@@ -11,26 +11,18 @@ import tp1.view.Messages;
 public class GameObjectContainer {
 	private List<GameObject> objects;
 	private List<GameObject> delayedObjects;
-	private List<GameObject> lands;
 	
 	public GameObjectContainer() {
 		objects = new ArrayList<>();
 		delayedObjects = new ArrayList<>();
-		lands = new ArrayList<>();
 	}
 	
-	public void add(GameObject object) {
-		if(object.getIcon() == Messages.LAND) lands.add(object);
-		else objects.add(object);}
+	public void add(GameObject object) {objects.add(object);}
 	
-	public void addDelayed(GameObject object) {
-		delayedObjects.add(object);
-	}
+	public void addDelayed(GameObject object) {delayedObjects.add(object);}
 	
 	private void joinLists() {
-		for(GameObject o: delayedObjects) {
-			objects.add(o);
-		}
+		for(GameObject o: delayedObjects) {objects.add(o);}
 		delayedObjects.clear();
 	}
 	
@@ -60,9 +52,6 @@ public class GameObjectContainer {
 	}
 	
 	public boolean isSolid(Position position) {
-		for(GameObject o: this.lands) {
-			if(o.isSolid() && o.isInPosition(position)) return true;
-		}
 		for(GameObject o:this.objects) {
 			if(o.isSolid() && o.isInPosition(position)) return true;
 		}
@@ -72,9 +61,6 @@ public class GameObjectContainer {
 	public String postitionToString(Position position) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(GameObject o: this.objects) {
-			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
-		}
-		for(GameObject o: this.lands) {
 			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
 		}
 		return stringBuilder.toString();

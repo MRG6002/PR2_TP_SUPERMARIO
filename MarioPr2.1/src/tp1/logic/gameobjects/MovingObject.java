@@ -29,14 +29,10 @@ public abstract class MovingObject extends GameObject {
 	protected void doAction(Action action) {
 		this.isFalling = false;
 		if(this.game.isSolid(this.position.go(action)) || this.position.go(action).isBorder()) this.direction = Action.opposite(action);
-		else {  // isSolid == false && isBorder == false
+		else {
 			this.direction = action;
 			super.move(action);
 		}
-	}
-	
-	protected boolean isInDirection(Action direction) {
-	return this.direction == direction;
 	}
 	
 	protected boolean freeFalling() {
@@ -46,9 +42,13 @@ public abstract class MovingObject extends GameObject {
 			freeFalling = true;
 			this.isFalling = true;
 			super.move(Action.DOWN);
-			if(this.position.isBorder()) super.dead(); // Si sale del tablero por abajo, muere
+			if(this.position.isBorder()) super.dead();
 		}
 	return freeFalling;
+	}
+	
+	protected boolean isInDirection(Action direction) {
+	return this.direction == direction;
 	}
 	
 	protected void up(boolean big) {

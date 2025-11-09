@@ -6,11 +6,6 @@ import java.util.Objects;
 
 import tp1.view.Messages;
 
-/**
- * 
- * Immutable class to encapsulate and manipulate positions in the game board
- * 
- */
 public class Position {
 	private final int row;
 	private final int col;
@@ -26,7 +21,8 @@ public class Position {
 	
 	@Override
 	public boolean equals(Object obj) {
-	return this == obj || (obj != null && getClass() == obj.getClass() && this.row == ((Position) obj).row && this.col == ((Position) obj).col);
+	return this == obj || 
+			(obj != null && getClass() == obj.getClass() && this.row == ((Position) obj).row && this.col == ((Position) obj).col);
 	}
 	
 	@Override
@@ -43,9 +39,6 @@ public class Position {
 	return Messages.POSITION.formatted(this.row, this.col);		
 	}
 	
-	//posible excepcion si introduce un num no valido el usuario
-	//se soluciona haciendo invisible la pos, ya que en (-1, -1)
-	//no se vera el objeto creado
 	public static Position stringToPosition(String string) {
 		Position pos = null;
 		String aux = string.substring(1, string.length() - 1);

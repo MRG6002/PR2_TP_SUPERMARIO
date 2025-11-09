@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia 
+
 package tp1.logic.gameobjects;
 
 import java.util.Arrays;
@@ -15,7 +17,6 @@ public class GameObjectFactory {
 			new Box()
 		);
 	
-	//debemos comprobar que no se crean objetos en posiciones imposibles.
 	public static GameObject parse(String objWords[], GameWorld game) {
 		GameObject object = null;
 		for (GameObject o: availableObjects) {

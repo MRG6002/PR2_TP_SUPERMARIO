@@ -60,5 +60,4 @@ public class Goomba extends MovingObject {
 		}
 	return goomba;
 	}
-	
 }

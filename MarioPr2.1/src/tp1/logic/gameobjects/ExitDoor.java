@@ -39,16 +39,6 @@ public class ExitDoor extends GameObject {
 		return interaction;
 	}
 	
-
-	/*public ExitDoor parse(String objWords[], GameWorld game) {
-		ExitDoor door = null;
-		if(objWords.length == 2 && matchObjectName(objWords[1])) {
-			Position pos = Position.stringToPosition(objWords[0]);
-			door = new ExitDoor(pos, game);
-		}
-	return door;
-	}*/
-	
 	@Override
 	public GameObject newCopy(Position pos, GameWorld game){
 		return new ExitDoor(pos, game);

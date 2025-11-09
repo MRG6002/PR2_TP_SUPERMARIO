@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
@@ -19,7 +21,6 @@ public class Mushroom extends MovingObject{
 		super(null, null, Action.RIGHT, "mushroom", "mu");
 	}
 
-	//solo interactua con mario
 	@Override
 	public boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position);
@@ -31,11 +32,6 @@ public class Mushroom extends MovingObject{
 	public boolean receiveInteraction(Mario mario) {
 		this.dead();
 		return true;
-	}
-
-	@Override
-	public String getIcon() {
-		return Messages.MUSHROOM;
 	}
 	
 	@Override 
@@ -53,6 +49,11 @@ public class Mushroom extends MovingObject{
 			}
 		}
 	return goomba;
+	}
+	
+	@Override
+	public String getIcon() {
+		return Messages.MUSHROOM;
 	}
 	
 	@Override

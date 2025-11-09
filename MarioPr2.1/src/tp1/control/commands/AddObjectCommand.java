@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia
+
 package tp1.control.commands;
 
 import java.util.Arrays;
@@ -26,7 +28,6 @@ public class AddObjectCommand extends AbstractCommand{
 
 	@Override
 	public void execute(GameModel game, GameView view) {
-		//en null necesitamos un gameItem;
 		GameObject obj = GameObjectFactory.parse(objWords, game.getGameWorld());
 		if(obj != null) {
 			game.addObject(obj);

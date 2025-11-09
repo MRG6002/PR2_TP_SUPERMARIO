@@ -2,10 +2,6 @@
 
 package tp1.logic;
 
-/**
- * Represents the allowed actions in the game
- *
- */
 public enum Action {
 	LEFT(0 ,-1), RIGHT(0, 1), DOWN(1, 0), UP(-1, 0), STOP(0, 0);
 	
@@ -24,10 +20,6 @@ public enum Action {
 	public int getY() {
 	return y;
 	}
-	
-	/*public boolean isAction(Action action) {
-	return this.x == action.getX() && this.y == action.getY();
-	}*/
 	
 	public static Action parseAction(String commandWord) {
 		Action action = null;

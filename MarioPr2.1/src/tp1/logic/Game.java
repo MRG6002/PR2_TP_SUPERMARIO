@@ -35,6 +35,23 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.victory = false; 
 	}
 	
+	public void reset() {
+		reset(this.level);
+	}
+	
+	public boolean reset(int level) {
+		boolean levelExists = true;
+		switch (level) {
+		case 0:{this.initLevel0();} break;
+		case 1:{this.initLevel1();} break;
+		case 2:{this.initLevel2();} break;
+		case -1:{this.initLevelMinus1();} break;
+		default: levelExists = false;
+		}
+		return levelExists;
+	}
+	
+	//funciones generales
 	public String positionToString(int col, int row) {
 		Position position = new Position(row, col);
 		return this.gameObjectContainer.postitionToString(position);
@@ -48,7 +65,6 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	return this.time == 0 || this.lives == 0;
 	}
 	
-	// Not mandatory but recommended
 	public void exit() {
 		this.exit = true;
 	}
@@ -57,39 +73,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	return this.playerWins() || this.playerLoses() || this.exit == true;
 	}
 	
-	public void reset() {
-		reset(this.level);
-	}
-	
-	public boolean reset(int level) {
-		boolean levelExists = true;
-		/*if (level == 0) this.initLevel0();
-		else if(level == 1) this.initLevel1(); // level == 1
-		else if(level == -1) this.initLevelMinus1();
-		else if(level == 2) this.initLevel2();
-		else levelExists = false;*/
-		switch (level) {
-		case 0:{this.initLevel0();}
-		break;
-		case 1:{this.initLevel1();}
-		break;
-		case 2:{this.initLevel2();}
-		break;
-		case -1:{this.initLevelMinus1();}
-		break;
-		default: levelExists = false;
-		}
-		return levelExists;
-	}
-	
 	public boolean isSolid(Position position) {
 	return this.gameObjectContainer.isSolid(position);
-	}
-	
-	public void marioDead() {
-		this.lives--;
-		if(0 < this.lives) this.reset();
-		else this.mario.dead(); // this.lives == 0 (nunca va a ser menor que 0)
 	}
 	
 	public void update() {
@@ -107,6 +92,13 @@ public class Game implements GameModel, GameStatus, GameWorld {
 
 	public int numLives() {
 	return this.lives;
+	}
+	
+	//Mario
+	public void marioDead() {
+		this.lives--;
+		if(0 < this.lives) this.reset();
+		else this.mario.dead(); // this.lives == 0 (nunca va a ser menor que 0)
 	}
 	
 	public void addAction(Action action) {
@@ -133,6 +125,17 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.gameObjectContainer.doInteractionsFrom(mario);
 	}
 	
+	//Funciones necesarias para addObjectCommand
+	@Override
+	public GameWorld getGameWorld() {
+		return this;
+	}
+
+	@Override
+	public void conectMario(Mario mario) {
+		this.mario = mario;
+	}
+	
 	public void addObject(GameObject obj) {
 		this.gameObjectContainer.add(obj);
 	}
@@ -142,6 +145,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.gameObjectContainer.addDelayed(obj);
 	}
 
+	//toString y niveles
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -221,56 +225,5 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		gameObjectContainer.add(new Mushroom(new Position(12, 8), this));
 		//6. Boxes
 		gameObjectContainer.add(new Box(new Position(9, 4), this));
-	}
-	
-	//TESTEOS. Añadir 1 donde dice X y quitarle el 1 al initLevel1
-	private void initLevelX() {
-		this.time = 100;
-		this.level = 1;
-		// 1. Lands
-		gameObjectContainer = new GameObjectContainer();
-		for(int col = 0; col < 15; col++) {
-			gameObjectContainer.add(new Land(new Position(13, col), this));
-			gameObjectContainer.add(new Land(new Position(14, col), this));		
-		}
-		gameObjectContainer.add(new Land(new Position(Game.DIM_Y - 3, 9), this));
-		gameObjectContainer.add(new Land(new Position(Game.DIM_Y - 3, 12), this));
-		for(int col = 17; col < Game.DIM_X; col++) {
-			gameObjectContainer.add(new Land(new Position(Game.DIM_Y - 2, col), this));
-			gameObjectContainer.add(new Land(new Position(Game.DIM_Y - 1, col), this));		
-		}
-		gameObjectContainer.add(new Land(new Position(9, 2), this));
-		gameObjectContainer.add(new Land(new Position(9, 5), this));
-		gameObjectContainer.add(new Land(new Position(9, 6), this));
-		gameObjectContainer.add(new Land(new Position(9, 7), this));
-		gameObjectContainer.add(new Land(new Position(5, 6), this));
-
-		int tamX = 8;
-		int posIniX = Game.DIM_X - 3 - tamX, posIniY = Game.DIM_Y - 3;
-		
-		for(int col = 0; col < tamX; col++) {
-			for (int fila = 0; fila < col + 1; fila++) {
-				gameObjectContainer.add(new Land(new Position(posIniY - fila, posIniX + col), this));
-			}
-		}
-		
-		this.mario = new Mario(new Position(Game.DIM_Y - 3, 0), this);
-		gameObjectContainer.add(this.mario);
-		//gameObjectContainer.add(new Goomba(new Position(10, 0), this));
-		//gameObjectContainer.add(new Goomba(new Position(9, 0), this));
-		//gameObjectContainer.add(new Goomba(new Position(12, 1), this));
-		//gameObjectContainer.add(new Goomba(new Position(12, 3), this));
-		//gameObjectContainer.add(new Goomba(new Position(12, 3), this));
-	}
-	
-	//Funciones necesarias para generador de objetos
-	@Override
-	public GameWorld getGameWorld() {
-		return this;
-	}
-
-	@Override
-	public void conectMario(Mario mario) {
-		this.mario = mario;
 	}
 }

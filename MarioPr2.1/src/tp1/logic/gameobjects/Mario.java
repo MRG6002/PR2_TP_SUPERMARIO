@@ -35,46 +35,20 @@ public class Mario extends MovingObject {
 	Mario() {
 		super(null, null, Action.RIGHT, "mario", "m");
 	}
-
+	
+	//movimiento de Mario
 	@Override
 	public boolean isInPosition(Position position) {
 	return super.isInPosition(position) || (this.big && (this.position.go(Action.UP).equals(position)));
 	}
 	
-	//mario debe caer en movimiento automatico. Solo debe poder caer
 	@Override
 	public void update() {
 		Position position = this.position.go(Action.STOP); // Guardamos la position actual
-
 		this.playerMovement();
 		if(this.position.equals(position) && (!super.isInDirection(Action.STOP) || !this.game.isSolid(this.position.go(Action.DOWN)))) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
 			super.update();
-			//this.game.doInteractionsFrom(this);
-			//if(!super.isAlive()) this.game.marioDead();
 		}
-	}
-	
-	@Override
-	public String getIcon() {
-		StringBuilder stringBuilder = new StringBuilder();
-		
-		if(this.isInDirection(Action.STOP)) stringBuilder.append(Messages.MARIO_STOP);
-		else if(this.isInDirection(Action.LEFT)) stringBuilder.append(Messages.MARIO_LEFT);
-		else stringBuilder.append(Messages.MARIO_RIGHT); // this.direction == Action.RIGHT (nunca a ser UP o DOWN)
-	return stringBuilder.toString(); 
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		
-		stringBuilder.append("MARIO: ").append(super.toString());
-		if(this.big) stringBuilder.append("BIG ");
-		else stringBuilder.append("NOT BIG ");
-		if(this.isFalling()) stringBuilder.append("FALLING ");
-		else stringBuilder.append("NOT FALLING ");
-		stringBuilder.append("NOT SOLID");		
-	return stringBuilder.toString();
 	}
 	
 	private void playerMovement() {
@@ -107,7 +81,20 @@ public class Mario extends MovingObject {
 		this.actionList.addLast(action);
 	}
 	
-
+	public int count(Action action) {
+		int n = 0;
+		for(Action aux: this.actionList) {
+			if(aux == action) n++;
+		}
+	return n;
+	}
+	
+	public boolean isOpposite(Action action) {
+		for(Action aux: this.actionList) if(aux == Action.opposite(action)) return true;
+	return false;
+	}
+	
+	//interacciones de Mario
 	public  boolean interactWith(GameItem item) {
 		boolean interaction = item.isInPosition(this.position) || (this.big && item.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {item.receiveInteraction(this);}
@@ -120,7 +107,7 @@ public class Mario extends MovingObject {
 	return true;
 	}
 	
-	@Override //en los tests, sumamos 50 al darle a Box, no al coger el mushroom
+	@Override
 	public  boolean receiveInteraction(Mushroom obj) {
 		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
@@ -133,7 +120,7 @@ public class Mario extends MovingObject {
 	@Override
 	public  boolean receiveInteraction(Box obj) {
 		boolean interaction = this.rising && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
-		if(interaction) { //generacion del champi
+		if(interaction) { 
 			Mushroom mushroom = null;
 			if(this.big) {
 				mushroom = new Mushroom(this.position.go(Action.UP).go(Action.UP).go(Action.UP), this.game);
@@ -164,21 +151,7 @@ public class Mario extends MovingObject {
 	return interaction;
 	}
 	
-	public int count(Action action) {
-		int n = 0;
-		for(Action aux: this.actionList) {
-			if(aux == action) n++;
-		}
-	return n;
-	}
-	
-	public boolean isOpposite(Action action) {
-		for(Action aux: this.actionList) if(aux == Action.opposite(action)) return true;
-	return false;
-	}
-	
-	//game tiene referencia a mario. Pasarle los marios??
-	//game ahora tiene un array de marios??
+	//strings y parse de Mario
 	@Override
 	public Mario parse(String objWords[], GameWorld game) {
 		Mario mario = null;	
@@ -204,5 +177,28 @@ public class Mario extends MovingObject {
 			if(mario != null) game.conectMario(mario);
 		}
 	return mario;
+	}
+	
+	@Override
+	public String getIcon() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		if(this.isInDirection(Action.STOP)) stringBuilder.append(Messages.MARIO_STOP);
+		else if(this.isInDirection(Action.LEFT)) stringBuilder.append(Messages.MARIO_LEFT);
+		else stringBuilder.append(Messages.MARIO_RIGHT);
+	return stringBuilder.toString(); 
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append("MARIO: ").append(super.toString());
+		if(this.big) stringBuilder.append("BIG ");
+		else stringBuilder.append("NOT BIG ");
+		if(this.isFalling()) stringBuilder.append("FALLING ");
+		else stringBuilder.append("NOT FALLING ");
+		stringBuilder.append("NOT SOLID");		
+	return stringBuilder.toString();
 	}
 }
