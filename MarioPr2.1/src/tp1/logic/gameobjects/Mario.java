@@ -11,6 +11,7 @@ import tp1.view.Messages;
 
 public class Mario extends MovingObject {
 	private boolean big;
+	private boolean rising;
 	private ActionList actionList;
 
 	public Mario(Position position, GameWorld game) {
@@ -40,12 +41,13 @@ public class Mario extends MovingObject {
 	return super.isInPosition(position) || (this.big && (this.position.go(Action.UP).equals(position)));
 	}
 	
+	//mario debe caer en movimiento automatico. Solo debe poder caer
 	@Override
 	public void update() {
 		Position position = this.position.go(Action.STOP); // Guardamos la position actual
 
 		this.playerMovement();
-		if(this.position.equals(position) && !super.isInDirection(Action.STOP)) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
+		if(this.position.equals(position) && (!super.isInDirection(Action.STOP) || !this.game.isSolid(this.position.go(Action.DOWN)))) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
 			super.update();
 			//this.game.doInteractionsFrom(this);
 			//if(!super.isAlive()) this.game.marioDead();
@@ -77,6 +79,7 @@ public class Mario extends MovingObject {
 	
 	private void playerMovement() {
 		for(Action action: this.actionList) {
+			this.rising = false;
 			if(action == Action.DOWN) {
 				if(this.game.isSolid(this.position.go(Action.DOWN))) super.stop();
 				else {
@@ -86,6 +89,7 @@ public class Mario extends MovingObject {
 			}
 			else if(action == Action.UP) {
 				super.up(big);
+				this.rising = true;
 				this.game.doInteractionsFrom(this);
 			}
 			else if (action == Action.STOP){
@@ -116,11 +120,27 @@ public class Mario extends MovingObject {
 	return true;
 	}
 	
-	@Override
+	@Override //en los tests, sumamos 50 al darle a Box, no al coger el mushroom
 	public  boolean receiveInteraction(Mushroom obj) {
 		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
 			this.big = true;
+			//this.game.addPoints(50);
+		}
+	return interaction;
+	}
+	
+	@Override
+	public  boolean receiveInteraction(Box obj) {
+		boolean interaction = this.rising && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
+		if(interaction) { //generacion del champi
+			Mushroom mushroom = null;
+			if(this.big) {
+				mushroom = new Mushroom(this.position.go(Action.UP).go(Action.UP).go(Action.UP), this.game);
+			}
+			else mushroom = new Mushroom(this.position.go(Action.UP).go(Action.UP), this.game);
+			this.game.addDelayed(mushroom);
+			obj.receiveInteraction(this);
 			this.game.addPoints(50);
 		}
 	return interaction;

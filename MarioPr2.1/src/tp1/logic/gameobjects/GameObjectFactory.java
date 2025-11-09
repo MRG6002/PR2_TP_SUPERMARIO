@@ -11,7 +11,8 @@ public class GameObjectFactory {
 			new ExitDoor(),
 			new Goomba(),
 			new Mario(),
-			new Mushroom()
+			new Mushroom(),
+			new Box()
 		);
 	
 	//debemos comprobar que no se crean objetos en posiciones imposibles.

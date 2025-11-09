@@ -55,12 +55,12 @@ public abstract class GameObject implements GameItem{
 	
 	public void update() {};
 	public boolean isSolid() {return false;}
-	public  boolean receiveInteraction(Land obj) {return false;}
-	public  boolean receiveInteraction(ExitDoor obj) {return false;}
-	public  boolean receiveInteraction(Mario obj) {return false;}
-	public  boolean receiveInteraction(Goomba obj) {return false;}
-	public  boolean receiveInteraction(Mushroom obj) {return false;}
-	public  boolean receiveInteraction(Box obj) {return false;}
+	public boolean receiveInteraction(Land obj) {return false;}
+	public boolean receiveInteraction(ExitDoor obj) {return false;}
+	public boolean receiveInteraction(Mario obj) {return false;}
+	public boolean receiveInteraction(Goomba obj) {return false;}
+	public boolean receiveInteraction(Mushroom obj) {return false;}
+	public boolean receiveInteraction(Box obj) {return false;}
 
 	public GameObject parse(String objWords[], GameWorld game) {
 		GameObject obj = null;

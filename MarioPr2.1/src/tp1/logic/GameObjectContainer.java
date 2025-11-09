@@ -63,6 +63,9 @@ public class GameObjectContainer {
 		for(GameObject o: this.lands) {
 			if(o.isSolid() && o.isInPosition(position)) return true;
 		}
+		for(GameObject o:this.objects) {
+			if(o.isSolid() && o.isInPosition(position)) return true;
+		}
 	return false;
 	}
 

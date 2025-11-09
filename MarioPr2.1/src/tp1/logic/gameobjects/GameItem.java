@@ -9,9 +9,10 @@ public interface GameItem {
 
 	public  boolean interactWith(GameItem item);
 
-	public  boolean receiveInteraction(Land obj);
-	public  boolean receiveInteraction(ExitDoor obj);
-	public  boolean receiveInteraction(Mario obj);
-	public  boolean receiveInteraction(Goomba obj);
-	public  boolean receiveInteraction(Mushroom obj);
+	public boolean receiveInteraction(Land obj);
+	public boolean receiveInteraction(ExitDoor obj);
+	public boolean receiveInteraction(Mario obj);
+	public boolean receiveInteraction(Goomba obj);
+	public boolean receiveInteraction(Mushroom obj);
+	public boolean receiveInteraction(Box box);
 }

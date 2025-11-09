@@ -8,15 +8,15 @@ import tp1.view.Messages;
 public class Mushroom extends MovingObject{
 
 	public Mushroom(Position position, GameWorld game) {
-		super(position, game, Action.RIGHT, "mushroom", "m");
+		super(position, game, Action.RIGHT, "mushroom", "mu");
 	}
 	
 	public Mushroom(Position pos, GameWorld game, Action dir) {
-		super(pos, game, dir, "mushroom", "m");
+		super(pos, game, dir, "mushroom", "mu");
 	}
 	
 	Mushroom (){
-		super(null, null, Action.RIGHT, "mushroom", "m");
+		super(null, null, Action.RIGHT, "mushroom", "mu");
 	}
 
 	//solo interactua con mario

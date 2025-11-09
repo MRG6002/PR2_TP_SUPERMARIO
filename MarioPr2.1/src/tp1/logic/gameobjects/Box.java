@@ -27,13 +27,15 @@ public class Box extends GameObject{
 	public boolean isSolid() {return true;}
 	
 	@Override
-	public boolean interactWith(GameItem item) {return false;}
+	public boolean interactWith(GameItem item) {
+		boolean interaction = item.isInPosition(this.position.go(Action.DOWN));
+		if(interaction) {item.receiveInteraction(this);}
+		return interaction;
+	}
 	
-	//cambia a open y genera una seta
 	@Override 
 	public boolean receiveInteraction(Mario mario) {
 		this.isOpen = true;
-		this.game.addDelayed(new Mushroom(this.position.go(Action.UP), this.game));
 		return false;
 	}
 	

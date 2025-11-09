@@ -4,6 +4,7 @@ package tp1.logic;
 
 import tp1.logic.gameobjects.Land;
 import tp1.logic.gameobjects.Goomba;
+import tp1.logic.gameobjects.Box;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Mario;
@@ -26,6 +27,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	public Game(int nLevel) {
 		if(nLevel == 0) this.initLevel0();
 		else if(nLevel == 1) this.initLevel1(); // nLevel == 1
+		else if(nLevel == 2) this.initLevel2();
 		else this.initLevelMinus1();
 		this.points = 0;
 		this.lives = 3;
@@ -61,10 +63,22 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	public boolean reset(int level) {
 		boolean levelExists = true;
-		if (level == 0) this.initLevel0();
+		/*if (level == 0) this.initLevel0();
 		else if(level == 1) this.initLevel1(); // level == 1
 		else if(level == -1) this.initLevelMinus1();
-		else levelExists = false;
+		else if(level == 2) this.initLevel2();
+		else levelExists = false;*/
+		switch (level) {
+		case 0:{this.initLevel0();}
+		break;
+		case 1:{this.initLevel1();}
+		break;
+		case 2:{this.initLevel2();}
+		break;
+		case -1:{this.initLevelMinus1();}
+		break;
+		default: levelExists = false;
+		}
 		return levelExists;
 	}
 	
@@ -199,8 +213,18 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		gameObjectContainer.add(new Goomba(new Position(4, 6), this));
 	}
 	
+	private void initLevel2() {
+		this.initLevel1();
+		this.level = 2;
+		//5. Mushrooms
+		gameObjectContainer.add(new Mushroom(new Position(2, 20), this));
+		gameObjectContainer.add(new Mushroom(new Position(12, 8), this));
+		//6. Boxes
+		gameObjectContainer.add(new Box(new Position(9, 4), this));
+	}
+	
 	//TESTEOS. Añadir 1 donde dice X y quitarle el 1 al initLevel1
-	private void initLevel() {
+	private void initLevelX() {
 		this.time = 100;
 		this.level = 1;
 		// 1. Lands
@@ -232,8 +256,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		
 		this.mario = new Mario(new Position(Game.DIM_Y - 3, 0), this);
 		gameObjectContainer.add(this.mario);
-		gameObjectContainer.add(new Goomba(new Position(10, 0), this));
-		gameObjectContainer.add(new Goomba(new Position(9, 0), this));
+		//gameObjectContainer.add(new Goomba(new Position(10, 0), this));
+		//gameObjectContainer.add(new Goomba(new Position(9, 0), this));
 		//gameObjectContainer.add(new Goomba(new Position(12, 1), this));
 		//gameObjectContainer.add(new Goomba(new Position(12, 3), this));
 		//gameObjectContainer.add(new Goomba(new Position(12, 3), this));
