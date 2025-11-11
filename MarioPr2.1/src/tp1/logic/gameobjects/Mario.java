@@ -36,6 +36,10 @@ public class Mario extends MovingObject {
 		super(null, null, Action.RIGHT, "mario", "m");
 	}
 	
+	public void connect() {
+		this.game.connect(this);
+	}
+	
 	//movimiento de Mario
 	@Override
 	public boolean isInPosition(Position position) {
@@ -113,7 +117,6 @@ public class Mario extends MovingObject {
 		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
 			this.big = true;
-			//this.game.addPoints(50);
 		}
 	return interaction;
 	}
@@ -154,28 +157,28 @@ public class Mario extends MovingObject {
 	
 	//strings y parse de Mario
 	@Override
-	public Mario parse(String objWords[], GameWorld game) {
+	public Mario parse(String objWords[]) {
 		Mario mario = null;	
 		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
 			if(pos != null) {
-				if(objWords.length == 2) mario = new Mario(pos, game);
+				if(objWords.length == 2) mario = new Mario(pos, null);
 				else if(objWords.length >= 3) {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
 					if(correctDir && objWords.length == 3) {
-						mario = new Mario(pos, game, Action.parseAction(objWords[2]));
+						mario = new Mario(pos, null, Action.parseAction(objWords[2]));
 					}
 					else if(correctDir && objWords.length == 4) {
 						boolean big = true, error = false;
 						if (objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b")) big = true;
 						else if(objWords[3].equalsIgnoreCase("small") || objWords[3].equalsIgnoreCase("s")) big = false;
 						else error = true;
-						if(!error) mario = new Mario(pos, game, Action.parseAction(objWords[2]), big);
+						if(!error) mario = new Mario(pos, null, Action.parseAction(objWords[2]), big);
 					}
 				}
 			}
-			if(mario != null) game.conectMario(mario);
+			//if(mario != null) game.conectMario(mario);
 		}
 	return mario;
 	}

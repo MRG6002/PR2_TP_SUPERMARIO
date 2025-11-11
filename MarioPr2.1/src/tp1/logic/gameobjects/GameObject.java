@@ -62,16 +62,22 @@ public abstract class GameObject implements GameItem{
 	public boolean receiveInteraction(Mushroom obj) {return false;}
 	public boolean receiveInteraction(Box obj) {return false;}
 
-	public GameObject parse(String objWords[], GameWorld game) {
+	public GameObject parse(String objWords[]) {
 		GameObject obj = null;
 		if(objWords.length == 2 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
-			if(pos != null) obj = this.newCopy(pos, game);
+			if(pos != null) obj = this.newCopy(pos);
 		}
 	return obj;
 	}
 
-	public GameObject newCopy(Position pos, GameWorld game) {
+	public GameObject newCopy(Position pos) {
 		return null;
 	}
+
+	public void setGame(GameWorld game) {
+		this.game = game;
+	}
+
+	public void connect() {};
 }

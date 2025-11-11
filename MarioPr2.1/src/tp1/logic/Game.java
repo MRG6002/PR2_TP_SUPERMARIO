@@ -127,16 +127,13 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	//Funciones necesarias para addObjectCommand
 	@Override
-	public GameWorld getGameWorld() {
-		return this;
-	}
-
-	@Override
-	public void conectMario(Mario mario) {
+	public void connect(Mario mario) {
 		this.mario = mario;
 	}
 	
 	public void addObject(GameObject obj) {
+		obj.setGame(this);
+		obj.connect();
 		this.gameObjectContainer.add(obj);
 	}
 	

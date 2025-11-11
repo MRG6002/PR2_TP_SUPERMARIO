@@ -13,5 +13,4 @@ public interface GameModel {
 	public void reset();
 	public boolean reset(int level);
 	public void addObject(GameObject obj);
-	public GameWorld getGameWorld();
 }

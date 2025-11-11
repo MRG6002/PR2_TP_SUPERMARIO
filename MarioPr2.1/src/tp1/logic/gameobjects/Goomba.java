@@ -42,16 +42,16 @@ public class Goomba extends MovingObject {
 	}
 	
 	@Override
-	public Goomba parse(String objWords[], GameWorld game) {
+	public Goomba parse(String objWords[]) {
 		Goomba goomba = null;	
 		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
 			if(pos != null) {
-				if(objWords.length == 2) goomba = new Goomba(pos, game);
+				if(objWords.length == 2) goomba = new Goomba(pos, null);
 				else if(objWords.length == 3) {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir == Action.RIGHT || dir == Action.LEFT);
-					if(correctDir) goomba = new Goomba(pos, game, dir);
+					if(correctDir) goomba = new Goomba(pos, null, dir);
 				}
 			}
 		}

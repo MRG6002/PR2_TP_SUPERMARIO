@@ -28,7 +28,7 @@ public class AddObjectCommand extends AbstractCommand{
 
 	@Override
 	public void execute(GameModel game, GameView view) {
-		GameObject obj = GameObjectFactory.parse(objWords, game.getGameWorld());
+		GameObject obj = GameObjectFactory.parse(objWords);
 		if(obj != null) {
 			game.addObject(obj);
 			view.showGame();

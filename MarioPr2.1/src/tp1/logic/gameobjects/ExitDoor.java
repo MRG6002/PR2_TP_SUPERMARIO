@@ -40,7 +40,7 @@ public class ExitDoor extends GameObject {
 	}
 	
 	@Override
-	public GameObject newCopy(Position pos, GameWorld game){
-		return new ExitDoor(pos, game);
+	public GameObject newCopy(Position pos){
+		return new ExitDoor(pos, null);
 	}
 }

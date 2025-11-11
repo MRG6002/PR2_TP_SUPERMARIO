@@ -12,6 +12,6 @@ public interface GameWorld {
 	public void marioDead();
 	public boolean isSolid(Position position);
 	public void marioExited();
-	public void conectMario(Mario mario);
 	public void addDelayed(GameObject obj);
+	public void connect(Mario mario);
 }
