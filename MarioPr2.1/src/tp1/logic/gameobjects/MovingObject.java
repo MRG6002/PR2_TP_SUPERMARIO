@@ -28,7 +28,8 @@ public abstract class MovingObject extends GameObject {
 	
 	protected void doAction(Action action) {
 		this.isFalling = false;
-		if(this.game.isSolid(this.position.go(action)) || this.position.go(action).isBorder()) this.direction = Action.opposite(action);
+		if(this.game.isSolid(this.position.go(action)) || 
+				this.position.go(action).isBorder()) this.direction = Action.opposite(action);
 		else {
 			this.direction = action;
 			super.move(action);

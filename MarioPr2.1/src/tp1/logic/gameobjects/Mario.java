@@ -178,7 +178,6 @@ public class Mario extends MovingObject {
 					}
 				}
 			}
-			//if(mario != null) game.conectMario(mario);
 		}
 	return mario;
 	}

@@ -98,7 +98,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	public void marioDead() {
 		this.lives--;
 		if(0 < this.lives) this.reset();
-		else this.mario.dead(); // this.lives == 0 (nunca va a ser menor que 0)
+		else this.mario.dead(); 
 	}
 	
 	public void addAction(Action action) {
@@ -107,7 +107,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	private void restrictions(Action action) {
 		if(action != null) {
-			if(action == Action.STOP || (this.mario.count(action) < 4 && !this.mario.isOpposite(action))) this.mario.addAction(action);
+			if(action == Action.STOP || 
+					(this.mario.count(action) < 4 && !this.mario.isOpposite(action))) this.mario.addAction(action);
 		}
 	}
 	

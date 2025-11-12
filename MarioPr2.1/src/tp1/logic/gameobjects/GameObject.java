@@ -33,7 +33,6 @@ public abstract class GameObject implements GameItem{
 		this.isAlive = false;
 	}
 	
-	// Not mandatory but recommended
 	protected void move(Action direction) {
 		this.position = this.position.go(direction);
 	}
