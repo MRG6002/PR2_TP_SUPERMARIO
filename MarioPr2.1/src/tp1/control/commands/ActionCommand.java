@@ -21,8 +21,8 @@ public class ActionCommand extends AbstractCommand {
 
 	public ActionCommand(List<Action> actionList) {
 		super(NAME, SHORTCUT, DETAILS, HELP);
-		this.actionList = new ArrayList<>();
 		if(actionList != null) this.actionList = actionList;
+		else this.actionList = new ArrayList<>();
 	}
 
 	ActionCommand() {
@@ -32,10 +32,8 @@ public class ActionCommand extends AbstractCommand {
 
 	@Override
 	public void execute(GameModel game, GameView view) {
-		if(0 < this.actionList.size()) {
-			for(Action action: this.actionList) {
-				game.addAction(action);
-			}
+		for(Action action: this.actionList) {
+			game.addAction(action);
 		}
 		game.update();
 		view.showGame();
