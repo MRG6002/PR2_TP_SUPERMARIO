@@ -167,14 +167,14 @@ public class Mario extends MovingObject {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
 					if(correctDir && objWords.length == 3) {
-						mario = new Mario(pos, null, Action.parseAction(objWords[2]));
+						mario = new Mario(pos, null, dir);
 					}
 					else if(correctDir && objWords.length == 4) {
 						boolean big = true, error = false;
 						if (objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b")) big = true;
 						else if(objWords[3].equalsIgnoreCase("small") || objWords[3].equalsIgnoreCase("s")) big = false;
 						else error = true;
-						if(!error) mario = new Mario(pos, null, Action.parseAction(objWords[2]), big);
+						if(!error) mario = new Mario(pos, null, dir, big);
 					}
 				}
 			}
