@@ -26,9 +26,7 @@ public class AddObjectCommand extends AbstractCommand{
 	
 	@Override
 	public void execute(GameModel game, GameView view) {
-		if(game.addObject(objWords)) {
-			view.showGame();
-		}
+		if(game.addObject(objWords)) view.showGame();
 		else view.showError(Messages.INVALID_GAME_OBJECT.formatted(String.join(" ", this.objWords)));
 	}
 

@@ -133,14 +133,12 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	}
 	
 	public boolean addObject(String [] objWords) {
-		boolean correcto = false;
 		GameObject obj = GameObjectFactory.parse(objWords, this);
 		if(obj != null) {
-			correcto = true;
 			obj.connect();
 			this.gameObjectContainer.add(obj);
 		}
-		return correcto;
+		return obj != null;
 	}
 	
 	@Override
