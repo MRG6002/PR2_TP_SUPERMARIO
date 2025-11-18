@@ -11,7 +11,7 @@ import tp1.view.Messages;
 
 public class Mario extends MovingObject {
 	private boolean big;
-	private boolean rising;
+	private boolean headCollision;
 	private ActionList actionList;
 
 	public Mario(Position position, GameWorld game) {
@@ -58,7 +58,7 @@ public class Mario extends MovingObject {
 	
 	private void playerMovement() {
 		for(Action action: this.actionList) {
-			this.rising = false;
+			this.headCollision = false;
 			if(action == Action.DOWN) {
 				if(this.game.isSolid(this.position.go(Action.DOWN))) super.stop();
 				else {
@@ -67,8 +67,7 @@ public class Mario extends MovingObject {
 				}
 			}
 			else if(action == Action.UP) {
-				super.up(big);
-				this.rising = true;
+				this.headCollision = super.up(big);
 				this.game.doInteractionsFrom(this);
 			}
 			else if (action == Action.STOP){
@@ -123,7 +122,7 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public  boolean receiveInteraction(Box obj) {
-		boolean interaction = this.rising && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
+		boolean interaction = this.headCollision && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
 		if(interaction) { 
 			Mushroom mushroom = null;
 			if(this.big) {

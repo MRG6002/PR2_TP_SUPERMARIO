@@ -30,7 +30,7 @@ public class Box extends GameObject{
 	
 	@Override
 	public boolean interactWith(GameItem item) {
-		boolean interaction = item.isInPosition(this.position.go(Action.DOWN));
+		boolean interaction = item.isInPosition(this.position.go(Action.DOWN)) && !this.isOpen;
 		if(interaction) {item.receiveInteraction(this);}
 		return interaction;
 	}

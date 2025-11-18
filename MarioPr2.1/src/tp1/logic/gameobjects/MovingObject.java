@@ -52,16 +52,19 @@ public abstract class MovingObject extends GameObject {
 	return this.direction == direction;
 	}
 	
-	protected void up(boolean big) {
+	protected boolean up(boolean big) {
 		Position position = this.position.go(Action.UP);
-		
+		boolean headCollision = false;
 		this.isFalling = false;
 		if(big) {
 			if(!this.game.isSolid(position.go(Action.UP)) && !position.go(Action.UP).isBorder()) this.move(Action.UP);
+			else headCollision = true;
 		}
 		else {
 			if(!this.game.isSolid(position) && !position.isBorder()) this.move(Action.UP);
+			else headCollision = true;
 		}
+		return headCollision;
 	}
 	
 	protected void stop() {

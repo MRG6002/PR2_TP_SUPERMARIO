@@ -40,7 +40,8 @@ public class GameObjectContainer {
 		if(object.isAlive()) {
 			for(GameObject o: this.objects) { 
 				if(object.isAlive() && o.isAlive()) {
-					if(object.interactWith(o)) o.interactWith(object);
+					object.interactWith(o);
+					o.interactWith(object);
 				}
 			}
 		}
