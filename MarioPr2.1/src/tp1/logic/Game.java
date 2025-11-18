@@ -7,6 +7,7 @@ import tp1.logic.gameobjects.Goomba;
 import tp1.logic.gameobjects.Box;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
+import tp1.logic.gameobjects.GameObjectFactory;
 import tp1.logic.gameobjects.Mario;
 import tp1.logic.gameobjects.Mushroom;
 import tp1.view.Messages;
@@ -126,16 +127,20 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.gameObjectContainer.doInteractionsFrom(mario);
 	}
 	
-	//Funciones necesarias para addObjectCommand
 	@Override
 	public void connect(Mario mario) {
 		this.mario = mario;
 	}
 	
-	public void addObject(GameObject obj) {
-		obj.setGame(this);
-		obj.connect();
-		this.gameObjectContainer.add(obj);
+	public boolean addObject(String [] objWords) {
+		boolean correcto = false;
+		GameObject obj = GameObjectFactory.parse(objWords, this);
+		if(obj != null) {
+			correcto = true;
+			obj.connect();
+			this.gameObjectContainer.add(obj);
+		}
+		return correcto;
 	}
 	
 	@Override

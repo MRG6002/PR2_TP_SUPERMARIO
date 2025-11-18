@@ -35,16 +35,16 @@ public class Mushroom extends MovingObject{
 	}
 	
 	@Override 
-	public Mushroom parse(String objWords[]) {
+	public Mushroom parse(String objWords[], GameWorld game) {
 		Mushroom goomba = null;	
 		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
 			if(pos != null) {
-				if(objWords.length == 2) goomba = new Mushroom(pos, null);
+				if(objWords.length == 2) goomba = new Mushroom(pos, game);
 				else if(objWords.length == 3) {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir == Action.RIGHT || dir == Action.LEFT);
-					if(correctDir) goomba = new Mushroom(pos, null, dir);
+					if(correctDir) goomba = new Mushroom(pos, game, dir);
 				}
 			}
 		}

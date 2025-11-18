@@ -157,24 +157,24 @@ public class Mario extends MovingObject {
 	
 	//strings y parse de Mario
 	@Override
-	public Mario parse(String objWords[]) {
+	public Mario parse(String objWords[], GameWorld game) {
 		Mario mario = null;	
 		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
 			if(pos != null) {
-				if(objWords.length == 2) mario = new Mario(pos, null);
+				if(objWords.length == 2) mario = new Mario(pos, game);
 				else if(objWords.length >= 3) {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
 					if(correctDir && objWords.length == 3) {
-						mario = new Mario(pos, null, dir);
+						mario = new Mario(pos, game, dir);
 					}
 					else if(correctDir && objWords.length == 4) {
 						boolean big = true, error = false;
 						if (objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b")) big = true;
 						else if(objWords[3].equalsIgnoreCase("small") || objWords[3].equalsIgnoreCase("s")) big = false;
 						else error = true;
-						if(!error) mario = new Mario(pos, null, dir, big);
+						if(!error) mario = new Mario(pos, game, dir, big);
 					}
 				}
 			}

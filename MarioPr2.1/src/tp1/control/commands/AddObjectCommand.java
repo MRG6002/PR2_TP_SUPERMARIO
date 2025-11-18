@@ -5,8 +5,6 @@ package tp1.control.commands;
 import java.util.Arrays;
 
 import tp1.logic.GameModel;
-import tp1.logic.gameobjects.GameObject;
-import tp1.logic.gameobjects.GameObjectFactory;
 import tp1.view.GameView;
 import tp1.view.Messages;
 
@@ -25,12 +23,10 @@ public class AddObjectCommand extends AbstractCommand{
 	AddObjectCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
-
+	
 	@Override
 	public void execute(GameModel game, GameView view) {
-		GameObject obj = GameObjectFactory.parse(objWords);
-		if(obj != null) {
-			game.addObject(obj);
+		if(game.addObject(objWords)) {
 			view.showGame();
 		}
 		else view.showError(Messages.INVALID_GAME_OBJECT.formatted(String.join(" ", this.objWords)));
