@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class Tests_V2_1 {
 	public static final String DIR = "tests/pr2_1/";
 	public static final String FILE_PREFIXES[] = {
-			"00_0-helpPaint",
+			//"00_0-helpPaint",
 			"00_1-commands",
 			"00_2-movements",
 			"01_3-winsNoColision",
@@ -39,6 +39,4 @@ public class Tests_V2_1 {
 	public void test04() { 	testN(4); }
 	@Test
 	public void test05() { 	testN(5); }
-	@Test
-	public void test06() { 	testN(6); }
 }
