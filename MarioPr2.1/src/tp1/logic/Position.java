@@ -49,11 +49,12 @@ public class Position {
 				int posy = Integer.parseInt(posiciones[1]);
 				if(Position.validPosition(posx, posy)) pos = new Position(posx, posy);
 			}
+			
 		}
 		return pos;
 	}
 
 	private static boolean validPosition(int posx, int posy) {
-		return (posx >= 0 && posx < Game.DIM_X && posy >= 0 && posy < Game.DIM_Y);
+		return (posx >= 0 && posx < Game.DIM_Y && posy >= 0 && posy < Game.DIM_X);
 	}
 }

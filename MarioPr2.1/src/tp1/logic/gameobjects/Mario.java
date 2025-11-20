@@ -124,12 +124,6 @@ public class Mario extends MovingObject {
 	public  boolean receiveInteraction(Box obj) {
 		boolean interaction = this.headCollision && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
 		if(interaction) { 
-			Mushroom mushroom = null;
-			if(this.big) {
-				mushroom = new Mushroom(this.position.go(Action.UP).go(Action.UP).go(Action.UP), this.game);
-			}
-			else mushroom = new Mushroom(this.position.go(Action.UP).go(Action.UP), this.game);
-			this.game.addDelayed(mushroom);
 			obj.receiveInteraction(this);
 			this.game.addPoints(50);
 		}
