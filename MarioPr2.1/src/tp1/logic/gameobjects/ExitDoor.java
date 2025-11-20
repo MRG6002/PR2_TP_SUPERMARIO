@@ -16,10 +16,6 @@ public class ExitDoor extends GameObject {
 	ExitDoor() {
 		super(null, null, "exitdoor", "ed");
 	}
-
-	@Override
-	public void update() {
-	}
 	
 	@Override
 	public String getIcon() {

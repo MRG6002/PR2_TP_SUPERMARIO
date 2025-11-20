@@ -50,8 +50,7 @@ public class Goomba extends MovingObject {
 				if(objWords.length == 2) goomba = new Goomba(pos, game);
 				else if(objWords.length == 3) {
 					Action dir = Action.parseAction(objWords[2]);
-					boolean correctDir = (dir == Action.RIGHT || dir == Action.LEFT);
-					if(correctDir) goomba = new Goomba(pos, game, dir);
+					if(dir == Action.RIGHT || dir == Action.LEFT) goomba = new Goomba(pos, game, dir);
 				}
 			}
 		}

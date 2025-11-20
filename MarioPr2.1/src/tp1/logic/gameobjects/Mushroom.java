@@ -13,7 +13,7 @@ public class Mushroom extends MovingObject{
 		super(position, game, Action.RIGHT, "mushroom", "mu");
 	}
 	
-	public Mushroom(Position pos, GameWorld game, Action dir) {
+	private Mushroom(Position pos, GameWorld game, Action dir) {
 		super(pos, game, dir, "mushroom", "mu");
 	}
 	

@@ -15,7 +15,7 @@ public class Box extends GameObject{
 		this.isOpen = false;
 	}
 	
-	public Box(Position position, GameWorld game, boolean open) {
+	private Box(Position position, GameWorld game, boolean open) {
 		super(position, game, "box", "b");
 		this.isOpen = open;
 	}
