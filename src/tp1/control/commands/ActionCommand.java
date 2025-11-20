@@ -44,10 +44,7 @@ public class ActionCommand extends AbstractCommand {
 			int i = 1; // commandWords[0] == action
 			List<Action> actionList = new ArrayList<>();
 			
-			while(i < commandWords.length && Action.parseAction(commandWords[i]) != null) {
-				actionList.addLast(Action.parseAction(commandWords[i]));
-				i++;
-			}
+			while(i < commandWords.length && Action.parseAction(commandWords[i]) != null) actionList.addLast(Action.parseAction(commandWords[i++]));
 			if(i == commandWords.length) command = new ActionCommand(actionList);
 			else command = new ActionCommand();
 		}

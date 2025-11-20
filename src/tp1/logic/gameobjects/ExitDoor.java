@@ -40,7 +40,8 @@ public class ExitDoor extends GameObject {
 
 	@Override
 	public boolean interactWith(GameItem gameItem) {
-		boolean canInteract = gameItem.isInPosition(this.position) && gameItem.receiveInteraction(this);;
+		boolean canInteract = gameItem.isInPosition(this.position) && gameItem.receiveInteraction(this);
+		
 		if(canInteract) this.game.marioExited();
 	return canInteract;
 	}

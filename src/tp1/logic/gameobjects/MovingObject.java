@@ -60,11 +60,11 @@ public abstract class MovingObject extends GameObject {
 	protected void up(boolean big) {
 		Position position = this.position.go(Action.UP);
 		
-		this.isFalling = false;
 		if(big) position = position.go(Action.UP);
+		this.isFalling = false;
 		if(!position.isBorder()) {
-			if(this.game.isSolid(position)) this.collidedUp();
-			this.move(Action.UP);
+			if(this.game.isSolid(position)) collidedUp();
+			else this.move(Action.UP);
 		}
 	}
 	

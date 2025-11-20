@@ -42,14 +42,13 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public void update() {
-		Position position = this.position.go(Action.STOP); // Guardamos la position actual
+		Position position = this.position.go(Action.STOP);
 
 		this.playerMovement();
 		if(this.position.equals(position)) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
 			super.update();
-			this.game.doInteractionsFrom(this);
+			if(!super.isAlive()) this.game.marioDead();
 		}
-		if(!super.isAlive()) this.game.marioDead();
 	}
 	
 	@Override
@@ -69,8 +68,8 @@ public class Mario extends MovingObject {
 		stringBuilder.append("MARIO: ").append(super.toString());
 		if(this.big) stringBuilder.append("BIG ");
 		else stringBuilder.append("NOT BIG ");
-		if(this.isFalling()) stringBuilder.append("FALLING ");
-		else stringBuilder.append("NOT FALLING ");	
+		if(this.isFalling()) stringBuilder.append("FALLING");
+		else stringBuilder.append("NOT FALLING");	
 	return stringBuilder.toString();
 	}
 	
@@ -79,16 +78,14 @@ public class Mario extends MovingObject {
 			if(action == Action.DOWN) {
 				if(this.game.isSolid(this.position.go(Action.DOWN))) super.stop();
 				else {
-					while(super.freeFalling()) this.game.doInteractionsFrom(this);
+					while(super.freeFalling() && super.isAlive()) this.game.doInteractionsFrom(this);
+					if(!super.isAlive()) this.game.marioDead();
 				}
 			}
 			else if(action == Action.UP) {
 				super.up(big);
 				this.game.doInteractionsFrom(this);
-				if(this.collidedUp) {
-					super.move(Action.DOWN);
-					this.collidedUp = false;
-				}
+				this.collidedUp = false;
 			}
 			else if (action == Action.STOP){
 				super.stop();
@@ -125,23 +122,6 @@ public class Mario extends MovingObject {
 	public void addAction(Action action) {
 		this.actionList.addLast(action);
 	}
-	
-	@Override
-	public boolean interactWith(GameItem gameItem) {
-		boolean canInteract = gameItem.isInPosition(this.position) || (this.big && gameItem.isInPosition(this.position.go(Action.UP))), doInteract = false;
-		if(canInteract) {
-			doInteract = gameItem.receiveInteraction(this);
-			if(doInteract) {
-				if(this.big) {
-					if(!super.isFalling()) this.big = false;
-				}
-				else {
-					if(!super.isFalling()) super.dead();
-				}
-			}
-		}
-	return canInteract && doInteract;
-	}
 
 	@Override
 	public boolean receiveInteraction(ExitDoor exitDoor) {
@@ -170,7 +150,7 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public boolean receiveInteraction(Box box) {
-	return true;
+	return this.collidedUp;
 	}
 	
 	private boolean isBig(String string) {

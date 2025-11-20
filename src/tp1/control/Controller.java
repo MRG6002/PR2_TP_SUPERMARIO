@@ -1,6 +1,7 @@
 // Grupo 13: XiangLin - MarioRosellGarcia
 
 package tp1.control;
+
 import tp1.control.commands.Command;
 import tp1.control.commands.CommandGenerator;
 

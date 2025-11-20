@@ -20,8 +20,7 @@ public class Main {
 	 * @param args Arguments for the game.
 	 */
 	public static void main(String[] args) {
-		// Required to avoid issues with tests
-        Locale.of("es", "ES");
+        Locale.of("es", "ES"); // Required to avoid issues with tests
 		try {
 			int nLevel = 1;
 			

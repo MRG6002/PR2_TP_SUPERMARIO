@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
@@ -57,7 +59,8 @@ public class Box extends GameObject {
 	
 	@Override
 	public boolean interactWith(GameItem gameItem) {
-		boolean canInteract = this.full && gameItem.isInPosition(this.position) && gameItem.receiveInteraction(this), doInteract = false;;
+		boolean canInteract = this.full && gameItem.isInPosition(this.position.go(Action.DOWN)) && gameItem.receiveInteraction(this), doInteract = false;
+		
 		if(canInteract) {
 			Position position = this.position.go(Action.UP);
 			

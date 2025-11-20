@@ -7,7 +7,7 @@ import tp1.logic.GameWorld;
 import tp1.logic.Position;
 
 public abstract class GameObject implements GameItem {
-	protected Position position; // If you can, make it private
+	protected Position position;
 	private final String name;
 	private final String shortcut;
 	protected GameWorld game; 

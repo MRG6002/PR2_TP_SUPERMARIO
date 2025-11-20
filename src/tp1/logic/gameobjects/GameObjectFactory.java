@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia
+
 package tp1.logic.gameobjects;
 
 import java.util.Arrays;

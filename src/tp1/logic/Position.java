@@ -19,7 +19,7 @@ public class Position {
 		this.row = row;
 		this.col = col;
 	}
-
+	
 	public Position go(Action action) {
 	return new Position(this.row + action.getX(), this.col + action.getY());
 	}
@@ -48,7 +48,7 @@ public class Position {
 	}
 	
 	public boolean isBorder() {
-	return this.row == Game.DIM_Y - 16 || this.row == Game.DIM_Y || this.col == Game.DIM_X - 31 || this.col == Game.DIM_X;
+	return this.row == Game.DIM_Y - Game.DIM_Y - 1 || this.row == Game.DIM_Y || this.col == Game.DIM_X - Game.DIM_X - 1 || this.col == Game.DIM_X;
 	}
 	
 	@Override

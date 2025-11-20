@@ -10,6 +10,7 @@ import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.GameObjectFactory;
 import tp1.logic.gameobjects.Mario;
 import tp1.logic.gameobjects.Mushroom;
+
 import tp1.view.Messages;
 
 public class Game implements GameModel, GameStatus, GameWorld {
@@ -170,8 +171,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	private void initLevel0() {
 		this.time = 100;
 		this.level = 0;
+		this.gameObjectContainer = new GameObjectContainer();
 		// 1. Lands
-		gameObjectContainer = new GameObjectContainer();
 		for(int col = 0; col < 15; col++) {
 			gameObjectContainer.add(new Land(new Position(13, col), this));
 			gameObjectContainer.add(new Land(new Position(14, col), this));		

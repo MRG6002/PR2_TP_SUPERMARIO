@@ -13,7 +13,6 @@ public class Goomba extends MovingObject {
 	private static final String SHORTCUT = "g";
 	private static final int POINTS = 100;
 
-	
 	Goomba() {
 		super(null, NAME, SHORTCUT, null, null);
 	}
@@ -39,20 +38,14 @@ public class Goomba extends MovingObject {
 	@Override
 	public boolean interactWith(GameItem gameItem) {
 		boolean canInteract = gameItem.isInPosition(this.position) && gameItem.receiveInteraction(this);
+		
 		if(canInteract) {
 			super.dead();
 			this.game.addPoints(POINTS);
 		}
 	return canInteract;
 	}
-	
-	@Override
-	public boolean receiveInteraction(Mario mario) {
-		super.dead();
-		this.game.addPoints(POINTS);
-	return true;
-	}
-	
+
 	@Override
 	public GameObject parse(String[] objectWords, GameWorld game) {
 		GameObject gameObject = null;

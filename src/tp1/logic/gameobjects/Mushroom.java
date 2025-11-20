@@ -1,3 +1,5 @@
+// Grupo 13: XiangLin - MarioRosellGarcia
+
 package tp1.logic.gameobjects;
 
 import tp1.logic.Action;
@@ -35,6 +37,7 @@ public class Mushroom extends MovingObject {
 	@Override
 	public boolean interactWith(GameItem gameItem) {
 		boolean canInteract = gameItem.isInPosition(this.position) && gameItem.receiveInteraction(this);
+		
 		if(canInteract) super.dead();
 	return canInteract;
 	}
