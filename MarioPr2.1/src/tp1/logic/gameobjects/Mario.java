@@ -16,18 +16,21 @@ public class Mario extends MovingObject {
 
 	public Mario(Position position, GameWorld game) {
 		super(position, game, Action.RIGHT, "mario", "m");
+		this.headCollision = false;
 		this.big = true;
 		this.actionList = new ActionList();
 	}
 	
 	private Mario(Position position, GameWorld game, Action dir) {
 		super(position, game, dir, "mario", "m");
+		this.headCollision = false;
 		this.big = true;
 		this.actionList = new ActionList();
 	}
 	
 	private Mario(Position position, GameWorld game, Action dir, boolean big) {
 		super(position, game, dir, "mario", "m");
+		this.headCollision = false;
 		this.big = big;
 		this.actionList = new ActionList();
 	}
@@ -163,16 +166,21 @@ public class Mario extends MovingObject {
 						mario = new Mario(pos, game, dir);
 					}
 					else if(correctDir && objWords.length == 4) {
-						boolean big = true, error = false;
-						if (objWords[3].equalsIgnoreCase("big") || objWords[3].equalsIgnoreCase("b")) big = true;
-						else if(objWords[3].equalsIgnoreCase("small") || objWords[3].equalsIgnoreCase("s")) big = false;
-						else error = true;
-						if(!error) mario = new Mario(pos, game, dir, big);
+						if (isBig(objWords[3])) mario = new Mario(pos, game, dir, true);
+						else if(isSmall(objWords[3])) mario = new Mario(pos, game, dir, false);
 					}
 				}
 			}
 		}
 	return mario;
+	}
+	
+	private boolean isBig(String string) {
+		return string.equalsIgnoreCase("big") || string.equalsIgnoreCase("b");
+	}
+
+	private boolean isSmall(String string) {
+		return string.equalsIgnoreCase("small") || string.equalsIgnoreCase("s");
 	}
 	
 	@Override
