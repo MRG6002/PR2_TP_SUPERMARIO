@@ -29,8 +29,10 @@ public class GameObjectContainer {
 	
 	public void update() {
 		for (GameObject object : objects) {
-			object.update();
-			this.doInteractionsFrom(object);
+			if(object.isAlive()) {
+				object.update();
+				this.doInteractionsFrom(object);
+			}
 		}
 		removeDead();
 		joinLists();
@@ -55,7 +57,7 @@ public class GameObjectContainer {
 	
 	public boolean isSolid(Position position) {
 		for(GameObject o:this.objects) {
-			if(o.isSolid() && o.isInPosition(position)) return true;
+			if(o.isInPosition(position)) return o.isSolid();
 		}
 	return false;
 	}

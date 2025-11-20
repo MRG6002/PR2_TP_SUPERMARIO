@@ -50,15 +50,20 @@ public class Box extends GameObject{
 			if(pos != null) {
 				if(objWords.length == 2) box = new Box(pos, game);
 				else if(objWords.length == 3) {
-					boolean isOpen = false, error = false;
-					if (objWords[3].equalsIgnoreCase("full") || objWords[3].equalsIgnoreCase("f")) isOpen = false;
-					else if(objWords[3].equalsIgnoreCase("empty") || objWords[3].equalsIgnoreCase("e")) isOpen = true;
-					else error = true;
-					if(!error) box = new Box(pos, game, isOpen);
+					if (fullBox(objWords[3])) box = new Box(pos, game);
+					else if(emptyBox(objWords[3])) box = new Box(pos, game, true);
 				}
 			}
 		}
 	return box;
+	}
+	
+	private boolean fullBox(String string) {
+		return string.equalsIgnoreCase("full") || string.equalsIgnoreCase("f");
+	}
+	
+	private boolean emptyBox(String string) {
+		return string.equalsIgnoreCase("empty") || string.equalsIgnoreCase("e");
 	}
 	
 	@Override

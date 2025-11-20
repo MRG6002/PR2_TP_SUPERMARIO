@@ -31,7 +31,7 @@ public class Position {
 	}
 	
 	public boolean isBorder() {
-	return this.row == Game.DIM_Y - 16 || this.row == Game.DIM_Y || this.col == Game.DIM_X - 31 || this.col == Game.DIM_X;
+	return this.row == -1 || this.row == Game.DIM_Y || this.col == -1 || this.col == Game.DIM_X;
 	}
 	
 	@Override
