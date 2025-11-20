@@ -40,9 +40,9 @@ public class ResetCommand extends AbstractCommand {
 	public Command parse(String[] commandWords) {
 		Command command = null;
 		
-		if(this.matchCommandName(commandWords[0])) {
+		if((commandWords.length == 1 || commandWords.length == 2) && this.matchCommandName(commandWords[0])) {
 			if(commandWords.length == 1) command = new ResetCommand();
-			if(commandWords.length == 2) command = new ResetCommand(Integer.parseInt(commandWords[1]));
+			else command = new ResetCommand(Integer.parseInt(commandWords[1]));
 		}
 	return command;
 	}

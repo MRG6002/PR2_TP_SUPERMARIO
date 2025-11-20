@@ -41,11 +41,15 @@ public class Position {
 	
 	public static Position stringToPosition(String string) {
 		Position pos = null;
-		String aux = string.substring(1, string.length() - 1);
-		String[] posiciones = aux.split(",");
-		int posx = Integer.parseInt(posiciones[0]);
-		int posy = Integer.parseInt(posiciones[1]);
-		if(Position.validPosition(posx, posy)) pos = new Position(posx, posy);
+		if(string.startsWith("(") && string.endsWith(")") && string.contains(",")) {
+			String aux = string.substring(1, string.length() - 1);
+			String[] posiciones = aux.split(",");
+			if(posiciones.length == 2) {
+				int posx = Integer.parseInt(posiciones[0]);
+				int posy = Integer.parseInt(posiciones[1]);
+				if(Position.validPosition(posx, posy)) pos = new Position(posx, posy);
+			}
+		}
 		return pos;
 	}
 

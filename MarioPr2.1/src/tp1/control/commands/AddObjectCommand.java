@@ -33,7 +33,7 @@ public class AddObjectCommand extends AbstractCommand{
 	@Override
 	public Command parse(String[] commandWords) {
 		Command command = null;
-		if(2 < commandWords.length && this.matchCommandName(commandWords[0])) {
+		if(2 <= commandWords.length && this.matchCommandName(commandWords[0])) {
 			command = new AddObjectCommand(Arrays.copyOfRange(commandWords, 1, commandWords.length));
 		}
 		return command;

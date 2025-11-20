@@ -27,11 +27,7 @@ public class ActionList implements Iterable<Action> {
 	public void clear() {
 		this.actionList.clear();
 	}
-	
-	public int size() {
-	return this.actionList.size();
-	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
