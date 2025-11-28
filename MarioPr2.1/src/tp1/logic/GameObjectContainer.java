@@ -7,40 +7,53 @@ import java.util.List;
 
 import tp1.logic.gameobjects.GameItem;
 import tp1.logic.gameobjects.GameObject;
+import tp1.logic.gameobjects.Mario;
 import tp1.view.Messages;
 
 public class GameObjectContainer {
 	private List<GameObject> objects;
-	private List<GameObject> delayedObjects;
+	//private List<GameObject> delayedObjects;
 	
 	public GameObjectContainer() {
 		objects = new ArrayList<>();
-		delayedObjects = new ArrayList<>();
+		//delayedObjects = new ArrayList<>();
 	}
 	
 	public void add(GameObject object) {objects.add(object);}
 	
-	public void addDelayed(GameObject object) {delayedObjects.add(object);}
-	
-	private void joinLists() {
-		for(GameObject o: delayedObjects) {objects.add(o);}
-		delayedObjects.clear();
+	private List<GameObject> objectsCopy(){
+		List<GameObject> aux = new ArrayList<>();
+		for (GameObject object: this.objects) aux.add(object);
+		return aux;
 	}
 	
+	//public void addDelayed(GameObject object) {delayedObjects.add(object);}
+	
+	/*private void joinLists() {
+		for(GameObject o: delayedObjects) {objects.add(o);}
+		delayedObjects.clear();
+	}*/
+	
 	public void update() {
-		for (GameObject object : objects) {
+		List<GameObject> aux = objectsCopy();
+		for (GameObject object : aux) {
 			if(object.isAlive()) {
 				object.update();
-				this.doInteractionsFrom(object);
+				GameObjectContainer.doInteractionsFrom(object, aux);
 			}
 		}
 		removeDead();
-		joinLists();
+		//joinLists();
 	}
 	
-	public void doInteractionsFrom(GameItem object) {
+	public void doInteractionsFrom(Mario mario) {
+		GameObjectContainer.doInteractionsFrom(mario, objectsCopy());
+		
+	}
+	
+	public static void doInteractionsFrom(GameItem object, List<GameObject> aux) {
 		if(object.isAlive()) {
-			for(GameObject o: this.objects) { 
+			for(GameObject o: aux) { 
 				if(object.isAlive() && o.isAlive()) {
 					object.interactWith(o);
 					o.interactWith(object);

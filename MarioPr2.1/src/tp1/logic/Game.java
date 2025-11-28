@@ -137,7 +137,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	@Override
 	public void addDelayed(GameObject obj) {
-		this.gameObjectContainer.addDelayed(obj);
+		this.gameObjectContainer.add(obj);
 	}
 
 	//toString y niveles
