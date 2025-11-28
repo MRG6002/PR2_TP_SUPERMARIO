@@ -31,13 +31,13 @@ public enum Action {
 	return action;
 	}
 	
-	public static Action opposite(Action action) {
+	public Action opposite() {
 		Action aux = null;
 		
-		if(action == Action.LEFT) aux = Action.RIGHT;
-		else if(action == Action.RIGHT) aux = Action.LEFT;
-		else if(action == Action.UP) aux = Action.DOWN;
-		else if(action == Action.DOWN) aux = Action.UP;
+		if(this == Action.LEFT) aux = Action.RIGHT;
+		else if(this == Action.RIGHT) aux = Action.LEFT;
+		else if(this == Action.UP) aux = Action.DOWN;
+		else if(this == Action.DOWN) aux = Action.UP;
 	return aux;
 	}
 }

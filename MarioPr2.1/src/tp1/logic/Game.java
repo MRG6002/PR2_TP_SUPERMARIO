@@ -102,9 +102,10 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	}
 	
 	public void addAction(Action action) {
-		if(action != null && 
+		this.mario.addAction(action);
+		/*if(action != null && 
 				(action == Action.STOP || 
-					(this.mario.count(action) < 4 && !this.mario.isOpposite(action)))) this.mario.addAction(action);	
+					(this.mario.count(action) < 4 && !this.mario.isOpposite(action)))) this.mario.addAction(action);*/	
 	}
 	
 	public void marioExited() {

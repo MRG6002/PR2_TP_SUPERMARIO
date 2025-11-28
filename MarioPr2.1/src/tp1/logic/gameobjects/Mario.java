@@ -72,7 +72,7 @@ public class Mario extends MovingObject {
 				}
 			}
 			else if(action == Action.UP) {
-				this.headCollision = super.up(big);
+				super.up();
 				this.game.doInteractionsFrom(this);
 			}
 			else if (action == Action.STOP){
@@ -87,20 +87,23 @@ public class Mario extends MovingObject {
 	}
 
 	public void addAction(Action action) {
-		this.actionList.addLast(action);
+		if(isValidAction(action)) this.actionList.addLast(action); 
 	}
 	
-	public int count(Action action) {
-		int n = 0;
-		for(Action aux: this.actionList) {
-			if(aux == action) n++;
+	private boolean isValidAction(Action action) {
+		return action != null && 
+				(action == Action.STOP ||
+				!this.actionList.containsOpposite(action) && this.actionList.times(action) < 4);
+	}
+	
+	@Override
+	protected boolean headCollision() {
+		this.headCollision = super.headCollision();
+		if(big) {
+			Position pos = this.position.go(Action.UP).go(Action.UP);
+			this.headCollision = this.game.isSolid(pos) || position.isBorder();
 		}
-	return n;
-	}
-	
-	public boolean isOpposite(Action action) {
-		for(Action aux: this.actionList) if(aux == Action.opposite(action)) return true;
-	return false;
+		return this.headCollision;
 	}
 	
 	//interacciones de Mario

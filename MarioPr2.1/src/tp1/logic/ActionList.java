@@ -27,6 +27,19 @@ public class ActionList implements Iterable<Action> {
 	public void clear() {
 		this.actionList.clear();
 	}
+	
+	public int times(Action action) {
+		int n = 0;
+		for(Action aux: this.actionList) {
+			if(aux == action) n++;
+		}
+	return n;
+	}
+	
+	public boolean containsOpposite(Action action) {
+		for(Action aux: this.actionList) if(aux == action.opposite()) return true;
+	return false;
+	}
 
 	@Override
 	public String toString() {

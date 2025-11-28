@@ -45,7 +45,7 @@ public abstract class MovingObject extends GameObject {
 	protected void doAction(Action action) {
 		this.isFalling = false;
 		if(this.game.isSolid(this.position.go(action)) || 
-				this.position.go(action).isBorder()) this.direction = Action.opposite(action);
+				this.position.go(action).isBorder()) this.direction = action.opposite();
 		else {
 			this.direction = action;
 			super.move(action);
@@ -68,7 +68,7 @@ public abstract class MovingObject extends GameObject {
 	return this.direction == direction;
 	}
 	
-	protected boolean up(boolean big) {
+	/*protected boolean up(boolean big) {
 		Position position = this.position.go(Action.UP);
 		boolean headCollision = false;
 		this.isFalling = false;
@@ -78,6 +78,16 @@ public abstract class MovingObject extends GameObject {
 		else headCollision = true;
 
 		return headCollision;
+	}*/
+	
+	protected void up() {
+		this.isFalling = false;
+		if(!headCollision()) this.move(Action.UP);
+	}
+	
+	protected boolean headCollision() {
+		Position pos = this.position.go(Action.UP);
+		return this.game.isSolid(pos) || position.isBorder();
 	}
 	
 	protected void stop() {
