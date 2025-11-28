@@ -23,6 +23,16 @@ public class Goomba extends MovingObject {
 	Goomba() {
 		this(null, null);
 	}
+	
+	@Override
+	public GameObject newCopy(Position pos, GameWorld game) {
+		return new Goomba(pos, game);
+	}
+	
+	@Override
+	protected GameObject newCopy(Position pos, GameWorld game, Action dir) {
+		return new Goomba(pos, game, dir);
+	}
 
 	@Override
 	public String getIcon() {
@@ -41,21 +51,5 @@ public class Goomba extends MovingObject {
 		super.dead();
 		obj.receiveInteraction(this);
 	return false;
-	}
-	
-	@Override
-	public Goomba parse(String objWords[], GameWorld game) {
-		Goomba goomba = null;	
-		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
-			Position pos = Position.stringToPosition(objWords[0]);
-			if(pos != null) {
-				if(objWords.length == 2) goomba = new Goomba(pos, game);
-				else if(objWords.length == 3) {
-					Action dir = Action.parseAction(objWords[2]);
-					if(dir == Action.RIGHT || dir == Action.LEFT) goomba = new Goomba(pos, game, dir);
-				}
-			}
-		}
-	return goomba;
 	}
 }

@@ -51,6 +51,7 @@ public abstract class GameObject implements GameItem{
 	
 	public abstract String getIcon();
 	public abstract String toString();
+	public abstract GameObject newCopy(Position pos, GameWorld game);
 	
 	public void update() {};
 	public boolean isSolid() {return false;}
@@ -68,10 +69,6 @@ public abstract class GameObject implements GameItem{
 			if(pos != null) obj = this.newCopy(pos, game);
 		}
 	return obj;
-	}
-
-	public GameObject newCopy(Position pos, GameWorld game) {
-		return null;
 	}
 
 	public void setGame(GameWorld game) {

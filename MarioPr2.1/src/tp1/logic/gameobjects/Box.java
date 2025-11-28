@@ -26,6 +26,11 @@ public class Box extends GameObject{
 	}
 	
 	@Override
+	public GameObject newCopy(Position pos, GameWorld game) {
+		return new Box(pos, game);
+	}
+	
+	@Override
 	public boolean isSolid() {return true;}
 	
 	@Override
@@ -43,23 +48,17 @@ public class Box extends GameObject{
 	}
 	
 	@Override 
-	public Box parse(String objWords[], GameWorld game) {
-		Box box = null;	
-		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
+	public GameObject parse(String objWords[], GameWorld game) {
+		GameObject box = super.parse(objWords, game);	
+		if(box == null && objWords.length == 3 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
-			if(pos != null) {
-				if(objWords.length == 2) box = new Box(pos, game);
-				else if(objWords.length == 3) {
-					if (fullBox(objWords[3])) box = new Box(pos, game);
-					else if(emptyBox(objWords[3])) box = new Box(pos, game, true);
-				}
-			}
+			if(pos != null && correctWord(objWords[2])) box = new Box(pos, game, emptyBox(objWords[2]));
 		}
 	return box;
 	}
 	
-	private boolean fullBox(String string) {
-		return string.equalsIgnoreCase("full") || string.equalsIgnoreCase("f");
+	private boolean correctWord(String string) {
+		return string.equalsIgnoreCase("full") || string.equalsIgnoreCase("f") || emptyBox(string);
 	}
 	
 	private boolean emptyBox(String string) {
@@ -68,10 +67,8 @@ public class Box extends GameObject{
 	
 	@Override
 	public String getIcon() {
-		String string = "";
-		if(this.isOpen) string = Messages.EMPTY_BOX;
-		else string = Messages.BOX;
-		return string;
+		return this.isOpen ? Messages.EMPTY_BOX:Messages.BOX;
+		
 	}
 
 	@Override

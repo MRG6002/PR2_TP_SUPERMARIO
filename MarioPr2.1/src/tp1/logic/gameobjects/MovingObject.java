@@ -18,6 +18,22 @@ public abstract class MovingObject extends GameObject {
 		this.isFalling = false;
 	}
 	
+	@Override
+	public GameObject parse(String objWords[], GameWorld game) {
+		GameObject obj = super.parse(objWords, game);
+		if(obj == null && objWords.length == 3 && matchObjectName(objWords[1])) {
+			Position pos = Position.stringToPosition(objWords[0]);
+			Action dir = Action.parseAction(objWords[2]);
+			if(pos != null && dir != null && validDirection(dir)) 
+				return newCopy(pos, game, dir);
+		}
+	return obj;
+	}
+	
+	protected boolean validDirection(Action dir) { return dir == Action.RIGHT || dir == Action.LEFT; }
+	
+	protected abstract GameObject newCopy(Position pos, GameWorld game, Action action);
+	
 	public void update() {
 		if(this.game.isSolid(this.position.go(Action.DOWN))) {
 			this.isFalling = false;

@@ -31,6 +31,16 @@ public class Mario extends MovingObject {
 		this(null, null);
 	}
 	
+	@Override
+	public GameObject newCopy(Position pos, GameWorld game) {
+		return new Mario(pos, game);
+	}
+	
+	@Override
+	protected GameObject newCopy(Position pos, GameWorld game, Action dir) {
+		return new Mario(pos, game, dir, true);
+	}
+	
 	public void connect() {
 		this.game.connect(this);
 	}
@@ -145,34 +155,28 @@ public class Mario extends MovingObject {
 	
 	//strings y parse de Mario
 	@Override
-	public Mario parse(String objWords[], GameWorld game) {
-		Mario mario = null;	
-		if(objWords.length >= 2 && matchObjectName(objWords[1])) {
+	public GameObject parse(String objWords[], GameWorld game) {
+		GameObject mario = super.parse(objWords, game);	
+		if(mario == null && objWords.length == 4 && matchObjectName(objWords[1])) {
 			Position pos = Position.stringToPosition(objWords[0]);
-			if(pos != null) {
-				if(objWords.length == 2) mario = new Mario(pos, game);
-				else if(objWords.length >= 3) {
-					Action dir = Action.parseAction(objWords[2]);
-					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
-					if(correctDir && objWords.length == 3) {
-						mario = new Mario(pos, game, dir, true);
-					}
-					else if(correctDir && objWords.length == 4) {
-						if (isBig(objWords[3])) mario = new Mario(pos, game, dir, true);
-						else if(isSmall(objWords[3])) mario = new Mario(pos, game, dir, false);
-					}
-				}
-			}
+			Action dir = Action.parseAction(objWords[2]);
+			if(pos != null && dir != null && validDirection(dir) && validSize(objWords[3])) 
+				return new Mario(pos, game, dir, isBig(objWords[3]));
 		}
 	return mario;
 	}
 	
+	@Override 
+	protected boolean validDirection(Action dir) {
+		return super.validDirection(dir) || dir == Action.STOP;
+	}
+	
+	private boolean validSize(String string) {
+		return string.equalsIgnoreCase("small") || string.equalsIgnoreCase("s") || isBig(string);
+	}
+	
 	private boolean isBig(String string) {
 		return string.equalsIgnoreCase("big") || string.equalsIgnoreCase("b");
-	}
-
-	private boolean isSmall(String string) {
-		return string.equalsIgnoreCase("small") || string.equalsIgnoreCase("s");
 	}
 	
 	@Override
