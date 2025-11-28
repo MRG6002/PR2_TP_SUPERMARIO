@@ -44,17 +44,18 @@ public class ActionCommand extends AbstractCommand {
 		Command command = null;
 		if(1 < commandWords.length && this.matchCommandName(commandWords[0])) {
 			List<Action> actionList = new ArrayList<>();
-			parseActions(Arrays.copyOfRange(commandWords, 1, commandWords.length), actionList);
+			ActionCommand.parseActions(Arrays.copyOfRange(commandWords, 1, commandWords.length), actionList);
 			command = new ActionCommand(actionList);
 		}
 	return command;
 	}
 	
-	private void parseActions(String[] commandWords, List<Action> actionList) {
+	private static List<Action> parseActions(String[] commandWords, List<Action> actionList) {
 		Action action = null;
 		for(String s: commandWords) {
 			action = Action.parseAction(s);
 			actionList.addLast(action);
 		}
+		return actionList;
 	}
 }

@@ -8,13 +8,15 @@ import tp1.logic.GameWorld;
 import tp1.view.Messages;
 
 public class ExitDoor extends GameObject {
+	private static final String NAME = Messages.EXIT_DOOR_NAME;
+	private static final String SHORTCUT = Messages.EXIT_DOOR_SHORTCUT;
 
 	public ExitDoor(Position position, GameWorld game) {
-		super(position, game, "exitdoor", "ed");
+		super(position, game,  NAME, SHORTCUT);
 	}
 	
 	ExitDoor() {
-		super(null, null, "exitdoor", "ed");
+		this(null, null);
 	}
 	
 	@Override

@@ -124,4 +124,18 @@ public class Messages {
 	public static final String MUSHROOM = "🍄";
 	public static final String BOX = MyStringUtils.repeat("?",ConsoleView.CELL_SIZE);
 	public static final String EMPTY_BOX = MyStringUtils.repeat("0",ConsoleView.CELL_SIZE);
+
+//Object names
+	public static final String MARIO_NAME = "mario";
+	public static final String MARIO_SHORTCUT = "m";
+	public static final String GOOMBA_NAME = "goomba";
+	public static final String GOOMBA_SHORTCUT = "g";
+	public static final String EXIT_DOOR_NAME = "exitdoor";
+	public static final String EXIT_DOOR_SHORTCUT = "ed";
+	public static final String LAND_NAME = "land";
+	public static final String LAND_SHORTCUT = "l";
+	public static final String BOX_NAME = "box";
+	public static final String BOX_SHORTCUT = "b";
+	public static final String MUSHROOM_NAME = "mushroom";
+	public static final String MUSHROOM_SHORTCUT = "mu";
 }

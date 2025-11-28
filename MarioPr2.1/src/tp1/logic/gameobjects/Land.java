@@ -8,13 +8,15 @@ import tp1.logic.GameWorld;
 import tp1.view.Messages;
 
 public class Land extends GameObject {
+	private static final String NAME = Messages.LAND_NAME;
+	private static final String SHORTCUT = Messages.LAND_SHORTCUT;
 	
 	public Land(Position position, GameWorld game) {
-		super(position, game, "land", "l");
+		super(position, game, NAME, SHORTCUT);
 	}
 	
 	Land() {
-		super(null, null, "land", "l");
+		this(null, null);
 	}
 
 	@Override

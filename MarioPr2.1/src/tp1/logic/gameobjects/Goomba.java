@@ -9,17 +9,19 @@ import tp1.logic.GameWorld;
 import tp1.view.Messages;
 
 public class Goomba extends MovingObject {
+	private static final String NAME = Messages.GOOMBA_NAME;
+	private static final String SHORTCUT = Messages.GOOMBA_SHORTCUT;
 	
 	public Goomba(Position position, GameWorld game) {
-		super(position, game, Action.LEFT, "goomba", "g");
+		this(position, game, Action.LEFT);
 	}
 	
 	private Goomba(Position position, GameWorld game, Action dir) {
-		super(position, game, dir, "goomba", "g");
+		super(position, game, dir, NAME, SHORTCUT);
 	}
 
 	Goomba() {
-		super(null, null, Action.LEFT, "goomba", "g");
+		this(null, null);
 	}
 
 	@Override

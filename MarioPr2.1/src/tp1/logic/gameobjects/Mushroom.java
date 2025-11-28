@@ -8,17 +8,19 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Mushroom extends MovingObject{
+	private static final String NAME = Messages.MUSHROOM_NAME;
+	private static final String SHORTCUT = Messages.MUSHROOM_SHORTCUT;
 
 	public Mushroom(Position position, GameWorld game) {
-		super(position, game, Action.RIGHT, "mushroom", "mu");
+		this(position, game, Action.RIGHT);
 	}
 	
 	private Mushroom(Position pos, GameWorld game, Action dir) {
-		super(pos, game, dir, "mushroom", "mu");
+		super(pos, game, dir, NAME, SHORTCUT);
 	}
 	
 	Mushroom (){
-		super(null, null, Action.RIGHT, "mushroom", "mu");
+		this(null, null);
 	}
 
 	@Override

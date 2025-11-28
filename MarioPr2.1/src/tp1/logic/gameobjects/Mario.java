@@ -10,33 +10,25 @@ import tp1.logic.GameWorld;
 import tp1.view.Messages;
 
 public class Mario extends MovingObject {
+	private static final String NAME = Messages.MARIO_NAME;
+	private static final String SHORTCUT = Messages.MARIO_SHORTCUT;
 	private boolean big;
 	private boolean headCollision;
 	private ActionList actionList;
 
 	public Mario(Position position, GameWorld game) {
-		super(position, game, Action.RIGHT, "mario", "m");
-		this.headCollision = false;
-		this.big = true;
-		this.actionList = new ActionList();
-	}
-	
-	private Mario(Position position, GameWorld game, Action dir) {
-		super(position, game, dir, "mario", "m");
-		this.headCollision = false;
-		this.big = true;
-		this.actionList = new ActionList();
+		this(position, game, Action.RIGHT, true);
 	}
 	
 	private Mario(Position position, GameWorld game, Action dir, boolean big) {
-		super(position, game, dir, "mario", "m");
+		super(position, game, dir, NAME, SHORTCUT);
 		this.headCollision = false;
 		this.big = big;
 		this.actionList = new ActionList();
 	}
 	
 	Mario() {
-		super(null, null, Action.RIGHT, "mario", "m");
+		this(null, null);
 	}
 	
 	public void connect() {
@@ -163,7 +155,7 @@ public class Mario extends MovingObject {
 					Action dir = Action.parseAction(objWords[2]);
 					boolean correctDir = (dir != Action.DOWN && dir != Action.UP);
 					if(correctDir && objWords.length == 3) {
-						mario = new Mario(pos, game, dir);
+						mario = new Mario(pos, game, dir, true);
 					}
 					else if(correctDir && objWords.length == 4) {
 						if (isBig(objWords[3])) mario = new Mario(pos, game, dir, true);

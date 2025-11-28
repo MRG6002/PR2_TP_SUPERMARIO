@@ -8,21 +8,21 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Box extends GameObject{
+	private static final String NAME = Messages.BOX_NAME;
+	private static final String SHORTCUT = Messages.BOX_SHORTCUT;
 	private boolean isOpen;
 
 	public Box(Position position, GameWorld game) {
-		super(position, game, "box", "b");
-		this.isOpen = false;
+		this(position, game, false);
 	}
 	
 	private Box(Position position, GameWorld game, boolean open) {
-		super(position, game, "box", "b");
+		super(position, game, NAME, SHORTCUT);
 		this.isOpen = open;
 	}
 	
 	Box(){
-		super(null, null, "box", "b");
-		this.isOpen = false;
+		this(null, null);
 	}
 	
 	@Override
