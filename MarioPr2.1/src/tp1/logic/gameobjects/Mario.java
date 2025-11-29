@@ -53,11 +53,11 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public void update() {
-		Position position = this.position.go(Action.STOP); // Guardamos la position actual
+		Position position = this.position.go(Action.STOP); 
 		this.playerMovement();
-		if(this.position.equals(position) && (!super.isInDirection(Action.STOP) || !this.game.isSolid(this.position.go(Action.DOWN)))) { // Si Mario no se ha movido tras ejecutar las acciones, se aplica su movimiento automático
+		if(this.position.equals(position) && (!super.isInDirection(Action.STOP) || !this.game.isSolid(this.position.go(Action.DOWN)))) { 
 			super.update();
-			if(!this.isAlive()) this.game.marioDead(); //por si mario se cae por precipicio al actualizar
+			if(super.fallen()) this.game.marioDead(); 
 		}
 	}
 	
@@ -67,21 +67,13 @@ public class Mario extends MovingObject {
 			if(action == Action.DOWN) {
 				if(this.game.isSolid(this.position.go(Action.DOWN))) super.stop();
 				else {
-					while(super.freeFalling()) this.game.doInteractionsFrom(this);
+					while(super.freeFalling()) 
 					if(!super.isAlive()) this.game.marioDead();
 				}
 			}
-			else if(action == Action.UP) {
-				super.up();
-				this.game.doInteractionsFrom(this);
-			}
-			else if (action == Action.STOP){
-				super.stop();
-			}
-			else {
-				super.doAction(action);
-				this.game.doInteractionsFrom(this);
-			}
+			else if(action == Action.UP) super.up();
+			else if (action == Action.STOP) super.stop();
+			else super.doAction(action);
 		}
 		this.actionList.clear();
 	}
@@ -130,7 +122,8 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public  boolean receiveInteraction(Box obj) {
-		boolean interaction = this.headCollision && (obj.isInPosition(this.position.go(Action.UP)) || (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
+		boolean interaction = this.headCollision && (obj.isInPosition(this.position.go(Action.UP)) 
+				|| (this.big && obj.isInPosition(this.position.go(Action.UP).go(Action.UP))));
 		if(interaction) { 
 			obj.receiveInteraction(this);
 			this.game.addPoints(50);
@@ -140,7 +133,8 @@ public class Mario extends MovingObject {
 	
 	@Override
 	public  boolean receiveInteraction(Goomba obj) {
-		boolean interaction = obj.isInPosition(this.position) || (this.big && obj.isInPosition(this.position.go(Action.UP)));
+		boolean interaction = obj.isInPosition(this.position) 
+				|| (this.big && obj.isInPosition(this.position.go(Action.UP)));
 		if(interaction) {
 			if(this.big) {
 				if(!super.isFalling()) this.big = false;

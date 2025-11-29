@@ -43,7 +43,7 @@ public class Box extends GameObject{
 	@Override 
 	public boolean receiveInteraction(Mario mario) {
 		this.isOpen = true;
-		this.game.addDelayed(new Mushroom(this.position.go(Action.UP), this.game));
+		this.game.add(new Mushroom(this.position.go(Action.UP), this.game));
 		return false;
 	}
 	

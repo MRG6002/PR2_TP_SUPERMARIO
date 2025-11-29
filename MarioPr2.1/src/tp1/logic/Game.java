@@ -55,7 +55,7 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	//funciones generales
 	public String positionToString(int col, int row) {
 		Position position = new Position(row, col);
-		return this.gameObjectContainer.postitionToString(position);
+		return this.gameObjectContainer.positionToString(position);
 	}
 
 	public boolean playerWins() {
@@ -103,9 +103,6 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	
 	public void addAction(Action action) {
 		this.mario.addAction(action);
-		/*if(action != null && 
-				(action == Action.STOP || 
-					(this.mario.count(action) < 4 && !this.mario.isOpposite(action)))) this.mario.addAction(action);*/	
 	}
 	
 	public void marioExited() {
@@ -118,8 +115,8 @@ public class Game implements GameModel, GameStatus, GameWorld {
 		this.points += num;
 	}
 	 
-	public void doInteractionsFrom(Mario mario) {
-		this.gameObjectContainer.doInteractionsFrom(mario);
+	public void doInteractionsFrom(GameObject obj) {
+		this.gameObjectContainer.doInteractionsFrom(obj);
 	}
 	
 	@Override
@@ -130,15 +127,15 @@ public class Game implements GameModel, GameStatus, GameWorld {
 	public boolean addObject(String [] objWords) {
 		GameObject obj = GameObjectFactory.parse(objWords, this);
 		if(obj != null) {
+			this.add(obj);
 			obj.connect();
-			this.gameObjectContainer.add(obj);
 		}
 		return obj != null;
 	}
 	
 	@Override
-	public void addDelayed(GameObject obj) {
-		this.gameObjectContainer.addDelayed(obj);
+	public void add(GameObject obj) {
+		this.gameObjectContainer.add(obj);
 	}
 
 	//toString y niveles

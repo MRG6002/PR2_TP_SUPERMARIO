@@ -24,6 +24,10 @@ public abstract class GameObject implements GameItem{
 	public boolean isInPosition(Position position) {
 	return this.position.equals(position);
 	}
+	
+	protected boolean fallen() {
+		return this.position.isBorder();
+	}
  	
 	public boolean isAlive() {
 	return this.isAlive;
@@ -35,6 +39,7 @@ public abstract class GameObject implements GameItem{
 	
 	protected void move(Action direction) {
 		this.position = this.position.go(direction);
+		this.game.doInteractionsFrom(this);
 	}
 	
 	protected String getName() {
@@ -69,10 +74,6 @@ public abstract class GameObject implements GameItem{
 			if(pos != null) obj = this.newCopy(pos, game);
 		}
 	return obj;
-	}
-
-	public void setGame(GameWorld game) {
-		this.game = game;
 	}
 
 	public void connect() {};

@@ -11,36 +11,33 @@ import tp1.view.Messages;
 
 public class GameObjectContainer {
 	private List<GameObject> objects;
-	private List<GameObject> delayedObjects;
 	
 	public GameObjectContainer() {
 		objects = new ArrayList<>();
-		delayedObjects = new ArrayList<>();
 	}
 	
 	public void add(GameObject object) {objects.add(object);}
 	
-	public void addDelayed(GameObject object) {delayedObjects.add(object);}
-	
-	private void joinLists() {
-		for(GameObject o: delayedObjects) {objects.add(o);}
-		delayedObjects.clear();
+	private List<GameObject> auxiliarObjects() {
+		List<GameObject> aux = new ArrayList<>();
+		for (GameObject object : objects) aux.add(object);
+		return aux;
 	}
 	
 	public void update() {
-		for (GameObject object : objects) {
+		List<GameObject> aux = auxiliarObjects();
+		for (GameObject object : aux) {
 			if(object.isAlive()) {
 				object.update();
-				this.doInteractionsFrom(object);
 			}
 		}
 		removeDead();
-		joinLists();
 	}
 	
 	public void doInteractionsFrom(GameItem object) {
+		List<GameObject> aux = auxiliarObjects();
 		if(object.isAlive()) {
-			for(GameObject o: this.objects) { 
+			for(GameObject o: aux) { 
 				if(object.isAlive() && o.isAlive()) {
 					object.interactWith(o);
 					o.interactWith(object);
@@ -62,7 +59,7 @@ public class GameObjectContainer {
 	return false;
 	}
 
-	public String postitionToString(Position position) {
+	public String positionToString(Position position) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(GameObject o: this.objects) {
 			if(o.isAlive() && o.isInPosition(position)) stringBuilder.append(o.getIcon());
